@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yatra Sahayak</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <!-- CSS Styling for whole HTML -->
+  <style>
+    .book-button {
+      margin-top: 1em;
+    }
+    .my-footer {
+      background-color: #212529;
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
+    .welcome-component {
+      background-color: #212529;
+      margin: 0.05em;
+      padding: 1em;
+    }
+    .room-images {
+      max-width: 50%;
+      margin: 0.25em;
+    }
+  </style>
+</head>
+
+<body >
+
+<!-- Navigation bar implementation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="homepage.html">YatraSahayak</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="homepage.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="reservation.html">Reservations</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Rooms
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="single-room.html">Single Room</a></li>
+            <li><a class="dropdown-item" href="co-ed-room.html">Co-ed Room</a></li>
+            <!--              <li><hr class="dropdown-divider"></li>-->
+            <li><a class="dropdown-item active" href="highland-room.html">Highland Room</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Enter Room Name" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Images Implementation -->
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img src="/static/images/room-images/fansy-room.jpg" class="img-fluid rounded mx-auto d-block room-images">
+    </div>
+  </div>
+</div>
+
+
+<!-- Welcome Dialog with Button to Reservation -->
+<div class="text-center welcome-component" style="color: white">
+  <h1 class="welcome-text">
+    High-end Rooms for Seniors
+  </h1>
+  <p class="welcome-paragraph" style="color: white">
+    Amazing companion for your resting places, Book rooms of any quality you want with just a click.
+  </p>
+  <!-- Booking Button Implementation -->
+  <div class="row" style="background-color: #212529">
+    <div class="col text-center">
+      <a href="reservation-highland-room" class="btn btn-success book-button">Check Availability</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer Implementation-->
+<div class="row text-center my-footer">
+  <p style="color: white">Made with ❤️ by Tanmay</p>
+  <a href="https://github.com/sarkartanmay393">
+    <img src="/static/images/icons/github.png" height="32" width="32">
+  </a>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+
+</html>
