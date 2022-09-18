@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/sarkartanmay393/BookingSystem-WebApp/pkg/config"
-	"github.com/sarkartanmay393/BookingSystem-WebApp/pkg/models"
-	"github.com/sarkartanmay393/BookingSystem-WebApp/pkg/render"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/config"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/models"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/render"
 	"net/http"
 )
 

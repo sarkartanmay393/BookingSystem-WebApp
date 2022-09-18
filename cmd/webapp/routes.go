@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/sarkartanmay393/BookingSystem-WebApp/pkg/config"
-	"github.com/sarkartanmay393/BookingSystem-WebApp/pkg/handlers"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/config"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/handlers"
 	"net/http"
 )
 

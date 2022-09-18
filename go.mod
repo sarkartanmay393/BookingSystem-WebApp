@@ -1,4 +1,4 @@
-module github.com/sarkartanmay393/BookingSystem-WebApp
+module github.com/sarkartanmay393/RoomReservation-WebApp
 
 go 1.18
 
