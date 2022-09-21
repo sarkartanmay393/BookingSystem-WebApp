@@ -1,0 +1,34 @@
+.my-footer {
+    background-color: #212529;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.notie-container {
+    box-shadow: none;
+}
+
+.book-button {
+    margin-top: 1em;
+}
+
+.welcome-component {
+    background-color: #212529;
+    margin: 0.05em;
+    padding: 1em;
+}
+.room-images {
+    max-width: 50%;
+    margin: 0.25em;
+}
+
+.contact-component {
+    margin: 2em;
+}
+
+
+.reservation-component {
+    margin: 2em;
+    padding: 1em;
+
+}

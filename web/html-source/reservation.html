@@ -8,21 +8,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+  <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css">
 
-  <!-- CSS Styling for whole HTML -->
-  <style>
-    .my-footer {
-      background-color: #212529;
-      padding-top: 1em;
-      padding-bottom: 1em;
-    }
-    .reservation-component {
-      margin: 2em;
-    }
-    .notie-container {
-      box-shadow: none;
-    }
-  </style>
 </head>
 
 <body >
@@ -118,51 +106,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
   <script src="https://unpkg.com/notie"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script src="static/javascript/script.js"></script>
 
-
-  <script>
-    // Script for form validation
-    (function () {
-      'use strict'
-      const forms = document.querySelectorAll('.needs-validation')
-      Array.from(forms)
-              .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                  if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                  }
-
-                  form.classList.add('was-validated')
-                }, false)
-              })
-    })()
-
-    // Script for date range picker
-    const elem = document.getElementById('reservation-dates');
-    const rangePicker = new DateRangePicker(elem, {
-      // Put Options Here
-      format: "dd-mm-yyyy"
-    });
-
-    // Script for alert on screen using Notie package
-    function notify(messageText, messageType) {
-      notie.alert({
-        type: messageType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
-        text: messageText,
-        position: "bottom"
-        // stay: Boolean, // optional, default = false
-        // time: Number, // optional, default = 3, minimum = 1,
-      })
-    }
-
-    // JS code for a specific button on how to react of click.
-    document.getElementById("test-btn").addEventListener("click", function () {
-      notify("This is my msg", "success")
-    })
-
-
-  </script>
 </body>
 
 </html>
