@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/alexedwards/scs/v2"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/config"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/handlers"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/render"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/handlers"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 	"log"
 	"net/http"
 	"time"

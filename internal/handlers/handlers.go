@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/justinas/nosurf"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/config"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/models"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/render"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 	"log"
 
 	"net/http"
@@ -79,19 +79,20 @@ func (repo *Repository) PostReservationHandler(w http.ResponseWriter, r *http.Re
 	w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
 }
 
+// Custom jsonResponse structure for our own custom responses.
 type jsonResponse struct {
 	OK      bool   `json:"ok"`
 	Message string `json:"message"`
 }
 
-// AvailabilityHandler handles main page on "/reservation-json" and send json response.
+// AvailabilityHandler handles post request on "/reservation-json" and send json response.
 func (repo *Repository) AvailabilityHandler(w http.ResponseWriter, r *http.Request) {
 	resp := jsonResponse{
 		OK:      true,
 		Message: "Available!",
 	}
 
-	out, err := json.MarshalIndent(resp, "", "		")
+	out, err := json.MarshalIndent(resp, "", "    ")
 	if err != nil {
 		log.Print(err)
 	}

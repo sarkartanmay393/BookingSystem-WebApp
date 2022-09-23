@@ -3,8 +3,8 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/config"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/pkg/models"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"log"
 	"net/http"
 	"path/filepath"
