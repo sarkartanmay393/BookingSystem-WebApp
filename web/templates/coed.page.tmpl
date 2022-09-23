@@ -1,0 +1,102 @@
+{{template "base" .}}
+
+{{define "content"}}
+    <!-- Navigation bar implementation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://localhost:8080/">YatraSahayak</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="http://localhost:8080/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8080/reservation">Reservations</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Rooms
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="http://localhost:8080/singlebed">Single Room</a></li>
+                            <li><a class="dropdown-item active" href="http://localhost:8080/coed">Co-ed Room</a></li>
+                            <!--              <li><hr class="dropdown-divider"></li>-->
+                            <li><a class="dropdown-item" href="http://localhost:8080/highland">Highland Room</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8080/contact">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Enter Room Name" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Images Implementation -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img src="/static/images/room-images/co-ed-room.png" class="img-fluid rounded mx-auto d-block room-images">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Welcome Dialog with Button to Reservation -->
+    <div class="text-center welcome-component" style="color: white">
+        <h1 class="welcome-text">
+            Co-ed Rooms for Couples
+        </h1>
+        <p class="welcome-paragraph" style="color: white">
+            Amazing companion for your resting places, Book rooms of any quality you want with just a click.
+        </p>
+        <!-- Booking Button Implementation -->
+        <div class="row" style="background-color: #212529">
+            <div class="col text-center">
+                <button id="check-availability-popup-form-button" type="button" class="btn btn-success">Check Availability</button>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "js"}}
+    <script>
+        document.getElementById("check-availability-popup-form-button").addEventListener("click", function () {
+            let html = `
+          <form action="" method="post" class="needs-validation" novalidate>
+              <div id="reservation-dates-popup" class="row g-2 mt-2">
+                <div class="col">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" id="start-date" name="start-date" aria-describedby="start-date-help" placeholder="Arrival Date" required>
+                    <div class="invalid-feedback">Enter Valid Arrival Date</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" id="end-date" name="end-date" aria-describedby="end-date-help" placeholder="Departure Date" required>
+                    <div class="invalid-feedback">Enter Valid Departure Date</div>
+                  </div>
+                </div>
+              </div>
+          </form>
+          `
+            // notify("This is my msg", "success")
+            // notifySweet("error!", "do you test", "error", "okay");
+            attentionButton.formPopup({msg: html, title: "Choose dates"})
+        })
+
+        // Script for date range picker
+        const elem = document.getElementById('reservation-dates');
+        const rangePicker = new DateRangePicker(elem, {
+            // Put Options Here
+            format: "dd-mm-yyyy"
+        });
+    </script>
+{{end}}

@@ -22,7 +22,7 @@ func AttachConfig(a *config.AppConfig) {
 }
 
 // TemplateRender renders a specific template.
-func TemplateRender(w http.ResponseWriter, tmpl string, templateData *models.TemplateData) {
+func TemplateRender(w http.ResponseWriter, r *http.Request, tmpl string, templateData *models.TemplateData) {
 	// Get template cache from application config that we have already got inside "appConfig" variable.
 	// UseCache is used to recreate templateCache or setting existing template cache.
 	var tc map[string]*template.Template
@@ -31,7 +31,7 @@ func TemplateRender(w http.ResponseWriter, tmpl string, templateData *models.Tem
 		//log.Println("Used existing template cache.")
 	} else {
 		tc, _ = CreateTemplateCache()
-		appConf.UseCache = true
+		//appConf.UseCache = true
 		//log.Println("Create new template cache.")
 	}
 	// Problem: There is a problem of how to use UseCache to only create new tc when there is changes in .tmpl files.
@@ -40,7 +40,7 @@ func TemplateRender(w http.ResponseWriter, tmpl string, templateData *models.Tem
 		log.Println(t)
 		log.Fatalf("Error in TemplateRender function.\n")
 	}
-	// templateData = handlers.AddDefaultData(templateData) // Adds default data.
+	templateData = templateData.AddDefaultData(r) // Adds default data.
 	buffer := new(bytes.Buffer)
 	_ = t.Execute(buffer, templateData)
 	_, err := buffer.WriteTo(w)
