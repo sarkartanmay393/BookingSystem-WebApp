@@ -1,0 +1,77 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+    <!-- Navigation bar implementation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://localhost:8080/">YatraSahayak</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="http://localhost:8080/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8080/reservation">Reservations</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Rooms
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="http://localhost:8080/singlebed">Single Room</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/coed">Co-ed Room</a></li>
+                            <!--              <li><hr class="dropdown-divider"></li>-->
+                            <li><a class="dropdown-item" href="http://localhost:8080/highland">Highland Room</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://localhost:8080/contact">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Enter Room Name" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Links Implementation -->
+
+    <h2 class="mt-2 text-center">Reservation Summary</h2>
+    <hr>
+    {{$res := index .Data "reservation"}}
+    <div class="container reservation-summary-component">
+        <table class="table table-striped">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{$res.FirstName}} {{$res.LastName}}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>{{$res.Email}}</td>
+                </tr>
+                <tr>
+                    <td>Arrival:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Departure:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td>{{$res.Phone}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+{{end}}

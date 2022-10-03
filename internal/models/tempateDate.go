@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/justinas/nosurf"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/form"
 	"net/http"
 )
 
@@ -13,6 +14,8 @@ type TemplateData struct {
 	SuccessMessage string
 	FailMessage    string
 	CSRFToken      string
+	Form           *form.Form
+	Data           map[string]interface{}
 }
 
 // AddDefaultData adds data that I want in every page of our web app.

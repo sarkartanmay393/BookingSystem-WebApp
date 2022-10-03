@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"github.com/justinas/nosurf"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/form"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 	"log"
-
 	"net/http"
 )
 
@@ -110,4 +110,72 @@ func (repo *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 // HighlandHandler handles main page on "/highland".
 func (repo *Repository) HighlandHandler(w http.ResponseWriter, r *http.Request) {
 	render.TemplateRender(w, r, "highland.page.tmpl", &models.TemplateData{})
+}
+
+// MakeReservationHandler handles form page with get and post request.
+func (repo *Repository) MakeReservationHandler(w http.ResponseWriter, r *http.Request) {
+	var emptyReservation models.Reservation
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReservation
+
+	render.TemplateRender(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Form: form.New(nil),
+		Data: data,
+	})
+}
+
+// PostMakeReservationHandler handles form page with get and post request.
+func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	reservation := &models.Reservation{
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
+	}
+
+	form := form.New(r.PostForm)
+	//form.Has("first_name", r)
+	form.Required("first_name", "last_name", "email", "phone")
+
+	form.MinLength("first_name", 3, r)
+	form.MinLength("last_name", 3, r)
+	form.MinLength("phone", 10, r)
+	form.IsEmail("email")
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		render.TemplateRender(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+	repo.app.SessionManager.Put(r.Context(), "reservation", reservation)
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
+}
+
+func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	reservation, ok := repo.app.SessionManager.Get(r.Context(), "reservation").(*models.Reservation)
+	if ok {
+		data["reservation"] = reservation
+		render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+			Data: data,
+		})
+		return
+	}
+	log.Println("Failed to retrieve reservation data")
+	data["reservation"] = &models.Reservation{}
+	render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
+
 }

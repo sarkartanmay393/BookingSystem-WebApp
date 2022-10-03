@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/gob"
 	"github.com/alexedwards/scs/v2"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/handlers"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 	"log"
 	"net/http"
@@ -16,6 +18,7 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	gob.Register(&models.Reservation{})
 	// Creating template cache for the whole app to get started.
 	var err error
 	app.TemplateCache, err = render.CreateTemplateCache()

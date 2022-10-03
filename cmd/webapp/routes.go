@@ -28,6 +28,11 @@ func router(a *config.AppConfig) http.Handler {
 
 	mux.Get("/contact", http.HandlerFunc(handlers.Repo.ContactHandler)) // Serve /form page request.
 
+	// Serves get and post request on 'make-reservation' path.
+	mux.Get("/make-reservation", http.HandlerFunc(handlers.Repo.MakeReservationHandler))
+	mux.Post("/make-reservation", http.HandlerFunc(handlers.Repo.PostMakeReservationHandler))
+	mux.Get("/reservation-summary", http.HandlerFunc(handlers.Repo.ReservationSummaryHandler))
+
 	fileServer := http.FileServer(http.Dir("./static/"))             // fileServer handles file system contents.
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer)) // Handles all files.
 
