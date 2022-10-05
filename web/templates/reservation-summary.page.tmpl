@@ -45,6 +45,7 @@
     <h2 class="mt-2 text-center">Reservation Summary</h2>
     <hr>
     {{$res := index .Data "reservation"}}
+    {{$dates := index .Data "chosenDates"}}
     <div class="container reservation-summary-component">
         <table class="table table-striped">
             <thead></thead>
@@ -59,11 +60,11 @@
                 </tr>
                 <tr>
                     <td>Arrival:</td>
-                    <td></td>
+                    <td>{{$dates.Start}}</td>
                 </tr>
                 <tr>
                     <td>Departure:</td>
-                    <td></td>
+                    <td>{{$dates.End}}</td>
                 </tr>
                 <tr>
                     <td>Phone:</td>

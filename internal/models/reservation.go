@@ -7,3 +7,9 @@ type Reservation struct {
 	Phone     string
 	Email     string
 }
+
+// ChosenDates structs for two dates to select together.
+type ChosenDates struct {
+	Start string
+	End   string
+}

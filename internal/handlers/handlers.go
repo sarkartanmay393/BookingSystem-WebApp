@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/justinas/nosurf"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/form"
@@ -76,7 +75,11 @@ func (repo *Repository) ReservationHandler(w http.ResponseWriter, r *http.Reques
 func (repo *Repository) PostReservationHandler(w http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start-date")
 	end := r.Form.Get("end-date")
-	w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
+
+	repo.app.SessionManager.Put(r.Context(), "chosenDates", &models.ChosenDates{Start: start, End: end})
+	http.Redirect(w, r, "/make-reservation", http.StatusSeeOther)
+
+	//w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
 }
 
 // Custom jsonResponse structure for our own custom responses.
@@ -165,8 +168,10 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	reservation, ok := repo.app.SessionManager.Get(r.Context(), "reservation").(*models.Reservation)
-	if ok {
+	chosenDates, ok1 := repo.app.SessionManager.Get(r.Context(), "chosenDates").(*models.ChosenDates)
+	if ok == ok1 && ok == true {
 		data["reservation"] = reservation
+		data["chosenDates"] = chosenDates
 		render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
 			Data: data,
 		})
@@ -174,6 +179,7 @@ func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http
 	}
 	log.Println("Failed to retrieve reservation data")
 	data["reservation"] = &models.Reservation{}
+	data["chosenDates"] = &models.ChosenDates{}
 	render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
