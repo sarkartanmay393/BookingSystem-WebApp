@@ -19,6 +19,8 @@ var appConf *config.AppConfig
 // AttachConfig sets application config locally.
 func AttachConfig(a *config.AppConfig) {
 	appConf = a
+
+	models.AttachConfigToTemplateData(a)
 }
 
 // TemplateRender renders a specific template.

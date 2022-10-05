@@ -119,6 +119,19 @@
                 });
             }
 
+            // Calling Successes, Errors and Warnings
+            {{with .SuccessMessage}}
+            notify("{{.}}", "success")
+            {{end}}
+
+            {{with .ErrorMessage}}
+            notify("{{.}}", "error")
+            {{end}}
+
+            {{with .WarningMessage}}
+            notify("{{.}}", "warning")
+            {{end}}
+
             // JS function for Pop-up
             function Prompt() {
                 let toast = function (c) {

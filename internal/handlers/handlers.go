@@ -77,6 +77,7 @@ func (repo *Repository) PostReservationHandler(w http.ResponseWriter, r *http.Re
 	end := r.Form.Get("end-date")
 
 	repo.app.SessionManager.Put(r.Context(), "chosenDates", &models.ChosenDates{Start: start, End: end})
+
 	http.Redirect(w, r, "/make-reservation", http.StatusSeeOther)
 
 	//w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
@@ -162,6 +163,10 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 		return
 	}
 	repo.app.SessionManager.Put(r.Context(), "reservation", reservation)
+	_, ok := repo.app.SessionManager.Get(r.Context(), "chosenDates").(*models.ChosenDates)
+	if !ok {
+		repo.app.SessionManager.Put(r.Context(), "warning", "Not found chosen dates")
+	}
 	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 }
 
@@ -178,10 +183,14 @@ func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http
 		return
 	}
 	log.Println("Failed to retrieve reservation data")
-	data["reservation"] = &models.Reservation{}
-	data["chosenDates"] = &models.ChosenDates{}
-	render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
-		Data: data,
-	})
+
+	repo.app.SessionManager.Put(r.Context(), "error", "Not found chosen dates and user information")
+	http.Redirect(w, r, "/reservation", http.StatusTemporaryRedirect)
+
+	//data["reservation"] = &models.Reservation{}
+	//data["chosenDates"] = &models.ChosenDates{}
+	//render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+	//	Data: data,
+	//})
 
 }
