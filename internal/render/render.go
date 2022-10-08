@@ -39,8 +39,7 @@ func TemplateRender(w http.ResponseWriter, r *http.Request, tmpl string, templat
 	// Problem: There is a problem of how to use UseCache to only create new tc when there is changes in .tmpl files.
 	t, ok := tc[tmpl] // Taking exact template as user requested.
 	if !ok {
-		log.Println(t)
-		log.Fatalf("Error in TemplateRender function.\n")
+		log.Fatalf("Error in TemplateRender() function.\n")
 	}
 	templateData = templateData.AddDefaultData(r) // Adds default data.
 	buffer := new(bytes.Buffer)

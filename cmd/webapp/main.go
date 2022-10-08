@@ -18,17 +18,34 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	err := RunMain()
+	if err != nil {
+		log.Fatalln("Failed to execute runMain() function in main.go file.")
+	}
 
+	log.Println("Server started on port 8080 💫")
+	// Serving and Handling web with help of pat pkg.
+	srv := &http.Server{
+		Addr:    portNumber,
+		Handler: router(&app),
+	}
+	err = srv.ListenAndServe()
+	if err != nil {
+		log.Fatalln("Listen and serving error occurred")
+	}
+}
+
+func RunMain() error {
 	gob.Register(&models.Reservation{})
 	gob.Register(&models.ChosenDates{})
-
 	// Creating template cache for the whole app to get started.
 	var err error
 	app.TemplateCache, err = render.CreateTemplateCache()
-	app.UseCache = false     // Manual value setup in app config.
+	app.UseCache = true      // Manual value setup in app config.
 	app.InProduction = false // Manual value setup in app config.
 	if err != nil {
-		log.Fatalf("Error creating template cache\n")
+		log.Print("Error creating template cache\n") // No newline because of testing.
+		return err
 	}
 	render.AttachConfig(&app)                     // appConfig is transferred to render.go file.
 	temporaryRepo := handlers.CreateNewRepo(&app) // Creates a new Repo with global appConfig to be transferred.
@@ -44,14 +61,5 @@ func main() {
 
 	app.SessionManager = session // Transfers this session object to app config.
 
-	log.Println("Server started on port 8080")
-	// Serving and Handling web with help of pat pkg.
-	srv := &http.Server{
-		Addr:    portNumber,
-		Handler: router(&app),
-	}
-	err = srv.ListenAndServe()
-	if err != nil {
-		log.Fatalln("Listen and serving error occurred")
-	}
+	return nil
 }
