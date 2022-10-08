@@ -17,7 +17,6 @@ func router(a *config.AppConfig) http.Handler {
 	mux.Use(app.SessionManager.LoadAndSave) // Loads and saves session data.
 
 	mux.Get("/", http.HandlerFunc(handlers.Repo.HomeHandler))               // Serve root page request.
-	mux.Get("/form", http.HandlerFunc(handlers.Repo.CoedHandler))           // Serve /form page request.
 	mux.Get("/singlebed", http.HandlerFunc(handlers.Repo.SinglebedHandler)) // Serve /form page request.
 	mux.Get("/coed", http.HandlerFunc(handlers.Repo.CoedHandler))           // Serve /form page request.
 	mux.Get("/highland", http.HandlerFunc(handlers.Repo.HighlandHandler))   // Serve /form page request.

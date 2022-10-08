@@ -11,6 +11,7 @@
 3. Using [**scs**](https://github.com/alexedwards/scs) Session Management.
 4. HTML, CSS, JS, Bootstrap etc.
 5. Server side validation using Golang.
+6. Writing Test Functions in Golang.
 
 ### Packages I Used -
 1. "net/http"
@@ -26,5 +27,5 @@
 
 ### Screenshots
 
-|  ![](/Users/tanmaysarkar/Documents/Projects/RoomReservation-WebApp/static/screenshots/highend-room-page.png "Highend Room Page")   | ![](/Users/tanmaysarkar/Documents/Projects/RoomReservation-WebApp/static/screenshots/reservation-form-page.png "Reservaion Form Page") | ![](/Users/tanmaysarkar/Documents/Projects/RoomReservation-WebApp/static/screenshots/reservation-summary-page.png "Reservation Summary Page") |
+|  ![](static/screenshots/highend-room-page.png "Highend Room Page")   | ![](static/screenshots/reservation-form-page.png "Reservaion Form Page") | ![](static/screenshots/reservation-summary-page.png "Reservation Summary Page") |
 |-----|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|

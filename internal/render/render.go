@@ -11,8 +11,8 @@ import (
 	"text/template"
 )
 
-var functions map[string]interface {
-}
+var functions map[string]interface{}
+var pathToTemplates = "../../web/templates"
 
 var appConf *config.AppConfig
 
@@ -53,23 +53,24 @@ func TemplateRender(w http.ResponseWriter, r *http.Request, tmpl string, templat
 // CreateTemplateCache creates a map of web.
 func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
-	pages, err := filepath.Glob("./web/templates/*.page.tmpl")
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplates))
 	if err != nil {
 		return myCache, err
 	}
 	for _, page := range pages {
+
 		name := filepath.Base(page) // "/template/home.page.tmpl" -> "home/page.tmpl"
 		templateSet, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return myCache, err
 		}
 
-		layouts, err := filepath.Glob("./web/templates/*.layout.tmpl")
+		layouts, err := filepath.Glob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 		if err != nil {
 			return myCache, err
 		}
 		if len(layouts) > 0 {
-			templateSet, err = templateSet.ParseGlob("./web/templates/*.layout.tmpl")
+			templateSet, err = templateSet.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 			if err != nil {
 				return myCache, err
 			}
