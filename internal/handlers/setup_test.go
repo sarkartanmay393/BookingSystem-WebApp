@@ -50,8 +50,9 @@ func getRoutes() http.Handler {
 
 	mux := chi.NewRouter() // Instance of router using chi package.
 
-	mux.Use(middleware.Recoverer)           // Tackle panic attack as a middleware.
-	mux.Use(CSRFCheckTest)                  // Checks for Cross-site request forgery attacks.
+	mux.Use(middleware.Recoverer) // Tackle panic attack as a middleware.
+	// For POST requests we have to turn off CSRF Check middleware.
+	// mux.Use(CSRFCheckTest)                  // Checks for Cross-site request forgery attacks.
 	mux.Use(app.SessionManager.LoadAndSave) // Loads and saves session data.
 
 	mux.Get("/", http.HandlerFunc(Repo.HomeHandler))               // Serve root page request.

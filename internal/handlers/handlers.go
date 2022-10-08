@@ -182,7 +182,7 @@ func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http
 		})
 		return
 	}
-	log.Println("Failed to retrieve reservation data")
+	log.Println("Failed to retrieve reservation data in ReservationSummaryHandler() line:185")
 
 	repo.app.SessionManager.Put(r.Context(), "error", "Not found chosen dates and user information")
 	http.Redirect(w, r, "/reservation", http.StatusTemporaryRedirect)
