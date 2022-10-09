@@ -23,18 +23,18 @@ func TestMain(m *testing.M) {
 	sessionTest.Cookie.Persist = true
 	sessionTest.Cookie.SameSite = http.SameSiteLaxMode
 	sessionTest.Cookie.Secure = false
-
 	appConfTest.SessionManager = sessionTest // Transfers this session object to app config.
 	appConf = &appConfTest
 
 	os.Exit(m.Run())
 }
 
+// Custom Object of http.ResponseWriter
 type httpResponseWriter struct {
 }
 
 func (rw *httpResponseWriter) Header() http.Header {
-	return http.Header{}
+	return nil
 }
 func (rw *httpResponseWriter) Write([]byte) (int, error) {
 	return 0, nil

@@ -21,8 +21,6 @@ var appConf *config.AppConfig
 // AttachConfig sets application config locally.
 func AttachConfig(a *config.AppConfig) {
 	appConf = a
-
-	models.AttachConfigToTemplateData(a)
 }
 
 // AddDefaultData adds data that I want in every page of our web app.
@@ -48,7 +46,7 @@ func TemplateRender(w http.ResponseWriter, r *http.Request, tmpl string, templat
 		//appConf.UseCache = true
 		//log.Println("Create new template cache.")
 		if err != nil {
-			log.Printf("Tried to CreateTemplateCache() and failed with err: %v", err)
+			log.Printf("Error in line:49 render.go: %v", err)
 			return err
 		}
 	}
@@ -59,10 +57,14 @@ func TemplateRender(w http.ResponseWriter, r *http.Request, tmpl string, templat
 	}
 	templateData = AddDefaultData(templateData, r) // Adds default data.
 	buffer := new(bytes.Buffer)
-	_ = t.Execute(buffer, templateData)
+	err = t.Execute(buffer, templateData)
+	if err != nil {
+		log.Printf("Error while executing template\n")
+		return err
+	}
 	_, err = buffer.WriteTo(w)
 	if err != nil {
-		fmt.Println("Error writing template buffer to browser")
+		log.Printf("Error writing template buffer to browser\n")
 		return err
 	}
 
@@ -72,14 +74,12 @@ func TemplateRender(w http.ResponseWriter, r *http.Request, tmpl string, templat
 // CreateTemplateCache creates a map of web.
 func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
-	//pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplates))
 	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplates))
 	if err != nil {
 		return myCache, err
 	}
 	for _, page := range pages {
 		name := filepath.Base(page)
-		//fmt.Println(name)
 		templateSet, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return myCache, err
