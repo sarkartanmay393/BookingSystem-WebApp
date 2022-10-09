@@ -47,7 +47,7 @@ var TestCases = []struct {
 func TestHandlers(t *testing.T) {
 	routes := getRoutes()
 	testServer := httptest.NewTLSServer(routes)
-	defer testServer.Close()
+	defer testServer.Close() // It executes when whole function is done.
 
 	// Table Testing
 	for _, tc := range TestCases {

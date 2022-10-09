@@ -18,7 +18,7 @@ import (
 
 var app config.AppConfig
 var session *scs.SessionManager
-var pathToTemplates = "../../web/templates"
+var pathToTemplates = "web/templates"
 var functions template.FuncMap
 
 func getRoutes() http.Handler {
@@ -71,8 +71,8 @@ func getRoutes() http.Handler {
 	mux.Post("/make-reservation", http.HandlerFunc(Repo.PostMakeReservationHandler))
 	mux.Get("/reservation-summary", http.HandlerFunc(Repo.ReservationSummaryHandler))
 
-	fileServer := http.FileServer(http.Dir("/../../static/"))                     // fileServer handles file system contents.
-	mux.Handle("/../../static/*", http.StripPrefix("/../../static/", fileServer)) // Handles all files.
+	fileServer := http.FileServer(http.Dir("/static/"))               // fileServer handles file system contents.
+	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer)) // Handles all files.
 
 	return mux // Returns the http.handler for further use in main.go
 }
