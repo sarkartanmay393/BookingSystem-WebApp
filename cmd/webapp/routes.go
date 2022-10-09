@@ -13,8 +13,8 @@ func router(a *config.AppConfig) http.Handler {
 
 	mux.Use(middleware.Recoverer) // Tackle panic attack as a middleware.
 	// mux.Use(WriteToConsole)                 // Write new page load as a middleware.
-	mux.Use(CSRFCheck)                      // Checks for Cross-site request forgery attacks.
-	mux.Use(app.SessionManager.LoadAndSave) // Loads and saves session data.
+	mux.Use(CSRFCheck)                    // Checks for Cross-site request forgery attacks.
+	mux.Use(a.SessionManager.LoadAndSave) // Loads and saves session data.
 
 	mux.Get("/", http.HandlerFunc(handlers.Repo.HomeHandler))               // Serve root page request.
 	mux.Get("/singlebed", http.HandlerFunc(handlers.Repo.SinglebedHandler)) // Serve /form page request.

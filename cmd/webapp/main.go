@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-const portNumber = ":8080"
+var portNumber = ":8080"
 
 var app config.AppConfig
 var session *scs.SessionManager
@@ -25,10 +25,13 @@ func main() {
 		log.Fatalln("Failed to execute runMain() function in main.go file.")
 	}
 
+	os.Setenv("PORT", "8080")
+	portNumber = fmt.Sprintf(":%v", os.Getenv("PORT"))
+
 	log.Println("Server started on port 8080 💫")
 	// Serving and Handling web with help of pat pkg.
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%v", os.Getenv("PORT")),
+		Addr:    portNumber,
 		Handler: router(&app),
 	}
 	err = srv.ListenAndServe()
