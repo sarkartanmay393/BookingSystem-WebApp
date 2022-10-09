@@ -43,6 +43,7 @@ func TestAddDefaultData(t *testing.T) {
 }
 
 func TestTemplateRender(t *testing.T) {
+	pathToTemplates = "./../../web/templates"
 	rTest, err := getSessionActivated()
 	var wTest httpResponseWriter
 

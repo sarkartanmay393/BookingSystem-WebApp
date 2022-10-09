@@ -14,7 +14,7 @@ import (
 )
 
 var functions map[string]interface{}
-var pathToTemplates = "./../../web/templates"
+var pathToTemplates = "web/templates"
 
 var appConf *config.AppConfig
 

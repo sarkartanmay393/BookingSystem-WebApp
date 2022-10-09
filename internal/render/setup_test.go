@@ -34,10 +34,12 @@ type httpResponseWriter struct {
 }
 
 func (rw *httpResponseWriter) Header() http.Header {
-	return nil
+	var h http.Header
+	return h
 }
-func (rw *httpResponseWriter) Write([]byte) (int, error) {
-	return 0, nil
+func (rw *httpResponseWriter) Write(b []byte) (int, error) {
+	length := len(b)
+	return length, nil
 }
 func (rw *httpResponseWriter) WriteHeader(statusCode int) {
 }
