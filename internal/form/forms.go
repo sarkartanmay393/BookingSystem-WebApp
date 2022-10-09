@@ -20,8 +20,8 @@ func New(data url.Values) *Form {
 }
 
 // Has returns if there is the specific value is in the form or not.
-func (f *Form) Has(field string, r *http.Request) bool {
-	exist := r.Form.Get(field)
+func (f *Form) Has(field string) bool {
+	exist := f.Get(field)
 	if len(exist) == 0 {
 		f.Errors.Add(field, "This field can not be blank")
 		return false

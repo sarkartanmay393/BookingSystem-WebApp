@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/justinas/nosurf"
 	"net/http"
 )
@@ -21,6 +20,5 @@ func CSRFCheck(next http.Handler) http.Handler {
 		Secure:   false,
 		SameSite: http.SameSiteLaxMode,
 	})
-	fmt.Println("CSRF check happen")
 	return csrfHandler
 }

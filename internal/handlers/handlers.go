@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/justinas/nosurf"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/form"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
@@ -29,12 +28,6 @@ func CreateNewRepo(a *config.AppConfig) *Repository {
 // AttachRepo attaches Repository inside handler.go file.
 func AttachRepo(r *Repository) {
 	Repo = r
-}
-
-// AddDefaultData adds data that I want in every page of our web app.
-func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
-	td.CSRFToken = nosurf.Token(r)
-	return td
 }
 
 // HomeHandler handles main page on "/".
@@ -182,7 +175,7 @@ func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http
 		})
 		return
 	}
-	log.Println("Failed to retrieve reservation data")
+	log.Println("Failed to retrieve reservation data in ReservationSummaryHandler() line:185")
 
 	repo.app.SessionManager.Put(r.Context(), "error", "Not found chosen dates and user information")
 	http.Redirect(w, r, "/reservation", http.StatusTemporaryRedirect)
