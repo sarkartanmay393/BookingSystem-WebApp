@@ -11,8 +11,8 @@ import (
 func router(a *config.AppConfig) http.Handler {
 	mux := chi.NewRouter() // Instance of router using chi package.
 
-	mux.Use(middleware.Recoverer)           // Tackle panic attack as a middleware.
-	mux.Use(WriteToConsole)                 // Write new page load as a middleware.
+	mux.Use(middleware.Recoverer) // Tackle panic attack as a middleware.
+	// mux.Use(WriteToConsole)                 // Write new page load as a middleware.
 	mux.Use(CSRFCheck)                      // Checks for Cross-site request forgery attacks.
 	mux.Use(app.SessionManager.LoadAndSave) // Loads and saves session data.
 
@@ -32,8 +32,8 @@ func router(a *config.AppConfig) http.Handler {
 	mux.Post("/make-reservation", http.HandlerFunc(handlers.Repo.PostMakeReservationHandler))
 	mux.Get("/reservation-summary", http.HandlerFunc(handlers.Repo.ReservationSummaryHandler))
 
-	fileServer := http.FileServer(http.Dir("/../../static/"))                     // fileServer handles file system contents.
-	mux.Handle("/../../static/*", http.StripPrefix("/../../static/", fileServer)) // Handles all files.
+	fileServer := http.FileServer(http.Dir("/static/"))               // fileServer handles file system contents.
+	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer)) // Handles all files.
 
 	return mux // Returns the http.handler for further use in main.go
 }
