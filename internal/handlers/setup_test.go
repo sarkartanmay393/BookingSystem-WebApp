@@ -6,7 +6,6 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/justinas/nosurf"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
@@ -107,15 +106,4 @@ func CreateTestTemplateCache() (map[string]*template.Template, error) {
 		myCache[name] = templateSet
 	}
 	return myCache, nil
-}
-
-func CSRFCheckTest(next http.Handler) http.Handler {
-	csrfHandler := nosurf.New(next)
-	csrfHandler.SetBaseCookie(http.Cookie{
-		HttpOnly: true,
-		Path:     "/",
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
-	})
-	return csrfHandler
 }
