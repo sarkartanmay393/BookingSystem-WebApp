@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/handlers"
@@ -9,6 +10,7 @@ import (
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -26,7 +28,7 @@ func main() {
 	log.Println("Server started on port 8080 💫")
 	// Serving and Handling web with help of pat pkg.
 	srv := &http.Server{
-		Addr:    portNumber,
+		Addr:    fmt.Sprintf(":%v", os.Getenv("PORT")),
 		Handler: router(&app),
 	}
 	err = srv.ListenAndServe()
