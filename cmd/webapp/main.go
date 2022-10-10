@@ -6,6 +6,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/handlers"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/helpers"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 	"log"
@@ -43,6 +44,11 @@ func main() {
 func RunMain() error {
 	gob.Register(&models.Reservation{})
 	gob.Register(&models.ChosenDates{})
+	
+	// Starting of Logging information.
+	app.InfoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.ErrorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
 	// Creating template cache for the whole app to get started.
 	var err error
 	app.TemplateCache, err = render.CreateTemplateCache()
@@ -55,6 +61,7 @@ func RunMain() error {
 	render.AttachConfig(&app)                     // appConfig is transferred to render.go file.
 	temporaryRepo := handlers.CreateNewRepo(&app) // Creates a new Repo with global appConfig to be transferred.
 	handlers.AttachRepo(temporaryRepo)            // appConfig is transferred to handlers.go file.
+	helpers.ConnectToHelpers(&app)                // App config now to helpers package.
 	// Now application config will be available in render.go and handlers.go file.
 
 	// Session Management Implementation

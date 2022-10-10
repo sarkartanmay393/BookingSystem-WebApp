@@ -2,11 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/form"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/helpers"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
-	"log"
 	"net/http"
 )
 
@@ -32,26 +33,12 @@ func AttachRepo(r *Repository) {
 
 // HomeHandler handles main page on "/".
 func (repo *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	sMap := make(map[string]string) // String map to be passed.
-	sMap["Test"] = "Hello WORLD!"
-
-	remoteIP := r.RemoteAddr                                        // Getting IP address from request body.
-	repo.app.SessionManager.Put(r.Context(), "remote_ip", remoteIP) // Saving IP on session manager.
-
-	render.TemplateRender(w, r, "home.page.tmpl", &models.TemplateData{
-		StringMap: sMap,
-	})
+	render.TemplateRender(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // CoedHandler handles main page on "/coed".
 func (repo *Repository) CoedHandler(w http.ResponseWriter, r *http.Request) {
-	remoteIP := repo.app.SessionManager.GetString(r.Context(), "remote_ip") // Parsing IP from session manager.
-	sMap := make(map[string]string)                                         // String map to be passed.
-	sMap["remote_ip"] = remoteIP
-
-	render.TemplateRender(w, r, "coed.page.tmpl", &models.TemplateData{
-		StringMap: sMap,
-	})
+	render.TemplateRender(w, r, "coed.page.tmpl", &models.TemplateData{})
 }
 
 // SinglebedHandler handles main page on "/singlebed".
@@ -68,12 +55,9 @@ func (repo *Repository) ReservationHandler(w http.ResponseWriter, r *http.Reques
 func (repo *Repository) PostReservationHandler(w http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start-date")
 	end := r.Form.Get("end-date")
-
 	repo.app.SessionManager.Put(r.Context(), "chosenDates", &models.ChosenDates{Start: start, End: end})
-
-	http.Redirect(w, r, "/make-reservation", http.StatusSeeOther)
-
-	//w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
+	//http.Redirect(w, r, "/make-reservation", http.StatusSeeOther)
+	w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
 }
 
 // Custom jsonResponse structure for our own custom responses.
@@ -91,10 +75,9 @@ func (repo *Repository) AvailabilityHandler(w http.ResponseWriter, r *http.Reque
 
 	out, err := json.MarshalIndent(resp, "", "    ")
 	if err != nil {
-		log.Print(err)
+		// Generates a server error because of failure in json marshalling.
+		helpers.ServerError(w, err)
 	}
-	//log.Println(string(out))
-
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
 }
@@ -124,8 +107,9 @@ func (repo *Repository) MakeReservationHandler(w http.ResponseWriter, r *http.Re
 // PostMakeReservationHandler handles form page with get and post request.
 func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
+	//err = errors.New("self generated error")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 		return
 	}
 
@@ -137,7 +121,6 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 	}
 
 	form := form.New(r.PostForm)
-	//form.Has("first_name", r)
 	form.Required("first_name", "last_name", "email", "phone")
 
 	form.MinLength("first_name", 3)
@@ -175,15 +158,8 @@ func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http
 		})
 		return
 	}
-	log.Println("Failed to retrieve reservation data in ReservationSummaryHandler() line:185")
 
+	repo.app.ErrorLog.Println("Failed to retrieve reservation data from session")
 	repo.app.SessionManager.Put(r.Context(), "error", "Not found chosen dates and user information")
 	http.Redirect(w, r, "/reservation", http.StatusTemporaryRedirect)
-
-	//data["reservation"] = &models.Reservation{}
-	//data["chosenDates"] = &models.ChosenDates{}
-	//render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
-	//	Data: data,
-	//})
-
 }

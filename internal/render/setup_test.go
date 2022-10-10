@@ -5,6 +5,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
+	"log"
 	"net/http"
 	"os"
 	"testing"
@@ -17,6 +18,11 @@ var sessionTest *scs.SessionManager
 func TestMain(m *testing.M) {
 	gob.Register(&models.Reservation{})
 	gob.Register(&models.ChosenDates{})
+
+	// Starting of Logging information.
+	appConfTest.InfoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	appConfTest.ErrorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
 	// Session Management Implementation
 	sessionTest = scs.New()
 	sessionTest.Lifetime = 24 * time.Hour
