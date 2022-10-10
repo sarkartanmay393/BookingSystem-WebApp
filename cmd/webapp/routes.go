@@ -32,8 +32,8 @@ func router(a *config.AppConfig) http.Handler {
 	mux.Post("/make-reservation", http.HandlerFunc(handlers.Repo.PostMakeReservationHandler))
 	mux.Get("/reservation-summary", http.HandlerFunc(handlers.Repo.ReservationSummaryHandler))
 
-	fileServer := http.FileServer(http.Dir("/static/"))               // fileServer handles file system contents.
-	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer)) // Handles all files.
+	fileServer := http.FileServer(http.Dir("./static/"))             // fileServer handles file system contents.
+	mux.Handle("/static/*", http.StripPrefix("/static", fileServer)) // Handles all files.
 
 	return mux // Returns the http.handler for further use in main.go
 }
