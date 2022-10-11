@@ -3,16 +3,17 @@ package main
 import (
 	"encoding/gob"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/alexedwards/scs/v2"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/handlers"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/helpers"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
-	"log"
-	"net/http"
-	"os"
-	"time"
 )
 
 var portNumber = ":8080"
@@ -26,7 +27,7 @@ func main() {
 		log.Fatalln("Failed to execute runMain() function in main.go file.")
 	}
 
-	os.Setenv("PORT", "8080")
+	//os.Setenv("PORT", "8080")
 	portNumber = fmt.Sprintf(":%v", os.Getenv("PORT"))
 
 	log.Println("Server started on port 8080 💫")
@@ -44,7 +45,7 @@ func main() {
 func RunMain() error {
 	gob.Register(&models.Reservation{})
 	gob.Register(&models.ChosenDates{})
-	
+
 	// Starting of Logging information.
 	app.InfoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	app.ErrorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
