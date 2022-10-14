@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yatra Sahayak</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
   <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="static/css/styles.css">
 </head>
 
-<body >
+<body>
 
   <!-- Navigation bar implementation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="homepage.html">YatraSahayak</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -52,7 +55,97 @@
   </nav>
 
 
+  <!-- Available Rooms Grid -->
+  {{$rooms := index .Data "rooms"}}
+  <div class="container px-1 py-1" id="custom-cards">
+    <h2 class="pb-2 border-bottom"> Available Rooms</h2>
+
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+          style="background-image: image('/static/images/room-images/single-room.jpg');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{$rooms.r1}}</h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" class="rounded-circle border border-white"
+                  width="32" height="32">
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill"></use>
+                </svg>
+                <small>Earth</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3"></use>
+                </svg>
+                <small>3d</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+          style="background-image: url('unsplash-photo-2.jpg');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{$rooms.r2}}</h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" class="rounded-circle border border-white"
+                  width="32" height="32">
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill"></use>
+                </svg>
+                <small>Pakistan</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3"></use>
+                </svg>
+                <small>4d</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+          style="background-image: url('unsplash-photo-3.jpg');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{$rooms.r3}}</h3>
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="me-auto">
+                <img src="https://github.com/twbs.png" alt="Bootstrap" class="rounded-circle border border-white"
+                  width="32" height="32">
+              </li>
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill"></use>
+                </svg>
+                <small>California</small>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3"></use>
+                </svg>
+                <small>5d</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Make Reservation Implementation -->
+  {{$cdates := index .Data "chosenDates"}}
   <div class="container reservation-component">
     <div class="row">
       <div class="col">
@@ -60,25 +153,30 @@
         <form action="" method="post" class="needs-validation" novalidate>
 
           <div class="col g-4 mb-2">
-            <label for="first_name" class="form-label">First Name :</label>
+            <label for="chosenDates" class="form-label">Start Date: {{$cdates.Start}}</label>
+            <label for="chosenDates" class="form-label">End Date: {{$cdates.End}}</label>
+          </div>
+
+          <div class="col g-4 mb-2">
+            <label for="first_name" class="form-label" aria-autocomplete="both">First Name :</label>
             <input name="first_name" class="form-control" id="first_name" type="text" required>
             <div class="invalid-feedback">Enter First Name</div>
           </div>
 
           <div class="col g-4 mb-2">
-            <label for="last_name" class="form-label">Last Name :</label>
+            <label for="last_name" class="form-label" aria-autocomplete="both">Last Name :</label>
             <input name="last_name" class="form-control" id="last_name" type="text" required>
             <div class="invalid-feedback">Enter Last Name</div>
           </div>
 
           <div class="col g-4 mb-2">
-            <label for="email" class="form-label">Email Address :</label>
+            <label for="email" class="form-label" aria-autocomplete="both">Email Address :</label>
             <input name="email" class="form-control" id="email" type="email" required>
             <div class="invalid-feedback">Enter Valid Email Address</div>
           </div>
 
           <div class="col g-4 mb-2">
-            <label for="phone" class="form-label">Phone Number :</label>
+            <label for="phone" class="form-label" aria-autocomplete="both">Phone Number :</label>
             <input name="phone" class="form-control" id="phone" type="phone" required>
             <div class="invalid-feedback">Enter Valid Phone Number</div>
           </div>
@@ -101,7 +199,9 @@
     </a>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
   <script src="static/javascript/script.js"></script>
 
 </body>

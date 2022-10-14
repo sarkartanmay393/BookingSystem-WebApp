@@ -40,16 +40,19 @@
         </div>
     </nav>
 
-    <!-- Contact Links Implementation -->
+    <!-- Summary Links Implementation -->
 
     <h2 class="mt-2 text-center">Reservation Summary</h2>
     <hr>
     {{$res := index .Data "reservation"}}
-    {{$dates := index .Data "chosenDates"}}
     <div class="container reservation-summary-component">
         <table class="table table-striped">
             <thead></thead>
             <tbody>
+                <tr>
+                    <td>ID:</td>
+                    <td>{{$res.ID}}</td>
+                </tr>
                 <tr>
                     <td>Name:</td>
                     <td>{{$res.FirstName}} {{$res.LastName}}</td>
@@ -60,15 +63,23 @@
                 </tr>
                 <tr>
                     <td>Arrival:</td>
-                    <td>{{$dates.Start}}</td>
+                    <td>{{$res.StartDate}}</td>
                 </tr>
                 <tr>
                     <td>Departure:</td>
-                    <td>{{$dates.End}}</td>
+                    <td>{{$res.EndDate}}</td>
                 </tr>
                 <tr>
                     <td>Phone:</td>
                     <td>{{$res.Phone}}</td>
+                </tr>
+                <tr>
+                    <td>Created At:</td>
+                    <td>{{$res.CreatedAt}}</td>
+                </tr>
+                <tr>
+                    <td>Updated At:</td>
+                    <td>{{$res.UpdatedAt}}</td>
                 </tr>
             </tbody>
         </table>

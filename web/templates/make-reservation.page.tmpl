@@ -40,6 +40,7 @@
   </nav>
 
 
+
   <!-- Make Reservation Implementation -->
   <div class="container reservation-component">
     <div class="row">
@@ -47,8 +48,34 @@
         <h2>Make your reservation below</h2>
 
         {{$res := index .Data "reservation"}}
+        {{$sdates := index .Data "sdates"}}
+        {{$edates := index .Data "edates"}}
+        {{$rooms := index .Data "rooms"}}
+
+
         <form action="/make-reservation" method="post" class="" novalidate>
           <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+          <div class="col g-4 mb-2">
+            <label for="chosenDates" class="form-label">Start Date: <b> {{$sdates}} </b></label>
+            <label for="chosenDates" class="form-label">End Date: <b> {{$edates}} </b></label>
+          </div>
+
+          <!-- Available Rooms Grid -->
+          <div class="container px-4 py-1">
+            {{range $rooms}}
+
+            <div class="form-check">
+              <input class="form-control form-check-input" type="radio" name="hotels" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1">
+                <b> {{.RoomName}} </b>
+              </label>
+            </div>
+
+            {{end}} 
+          </div>
+  
+
 
           <div class="col g-4 mb-2">
             <label for="first_name" class="form-label">First Name :</label>

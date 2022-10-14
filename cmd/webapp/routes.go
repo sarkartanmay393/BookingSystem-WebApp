@@ -23,7 +23,7 @@ func router(a *config.AppConfig) http.Handler {
 
 	mux.Get("/reservation", http.HandlerFunc(handlers.Repo.ReservationHandler))        // Serve /form page request.
 	mux.Post("/reservation", http.HandlerFunc(handlers.Repo.PostReservationHandler))   // Serve /form page request.
-	mux.Post("/reservation-json", http.HandlerFunc(handlers.Repo.AvailabilityHandler)) // Serve /form page request.
+	// mux.Post("/reservation-json", http.HandlerFunc(handlers.Repo.AvailabilityHandler)) // Serve /form page request.
 
 	mux.Get("/contact", http.HandlerFunc(handlers.Repo.ContactHandler)) // Serve /form page request.
 
