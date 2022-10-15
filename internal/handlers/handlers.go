@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"fmt"
+	"github.com/go-chi/chi"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
@@ -71,15 +72,11 @@ func (repo *Repository) PostReservationHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	rooms, err := repo.db.SearcAvailabilityByDates(start, end)
+	rooms, err := repo.db.SearchAvailabilityByDates(start, end)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-
-	// for _, r := range rooms {
-	// 	log.Printf("ID: %v, ROOM: %v\n", r.ID, r.RoomName)
-	// }
 
 	if len(rooms) == 0 {
 		repo.app.SessionManager.Put(r.Context(), "error", "No available rooms in those dates")
@@ -88,19 +85,41 @@ func (repo *Repository) PostReservationHandler(w http.ResponseWriter, r *http.Re
 	}
 
 	repo.app.SessionManager.Put(r.Context(), "rooms", rooms)
-	repo.app.SessionManager.Put(r.Context(), "chosenDates", &models.ChosenDates{Start: start, End: end})
-	http.Redirect(w, r, "/make-reservation", http.StatusSeeOther)
+	repo.app.SessionManager.Put(r.Context(), "reservation", &models.Reservation{StartDate: start, EndDate: end})
+	http.Redirect(w, r, "/choose-room", http.StatusSeeOther)
 	// w.Write([]byte(fmt.Sprintf("Start date is %s and End date is %s", start, end)))
+}
+
+func (repo *Repository) ChooseRoomHandler(w http.ResponseWriter, r *http.Request) {
+	rooms := repo.app.SessionManager.Get(r.Context(), "rooms").([]models.Room)
+	data := make(map[string]interface{})
+	data["rooms"] = rooms
+	render.TemplateRender(w, r, "choose-room.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
+}
+
+// ParseURLParam gets the data from url body if available.
+func ParseURLParam(r *http.Request) (int, error) {
+	RoomID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		return 0, err
+	}
+
+	return RoomID, nil
 }
 
 // MakeReservationHandler handles form page with get and post request.
 func (repo *Repository) MakeReservationHandler(w http.ResponseWriter, r *http.Request) {
-	var emptyReservation models.Reservation
-	data := make(map[string]interface{})
-	data["reservation"] = emptyReservation
+
+	id, err := ParseURLParam(r)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
 
 	var ok bool
-	_, ok = repo.app.SessionManager.Get(r.Context(), "chosenDates").(*models.ChosenDates)
+	reservation, ok := repo.app.SessionManager.Get(r.Context(), "reservation").(*models.Reservation)
 	if !ok {
 		repo.app.ErrorLog.Println("not found chosen dates")
 		repo.app.SessionManager.Put(r.Context(), "warning", "No chosen dates")
@@ -108,9 +127,12 @@ func (repo *Repository) MakeReservationHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	reservation.RoomID = id
+
+	data := make(map[string]interface{})
 	data["sdates"] = repo.app.SessionManager.PopString(r.Context(), "sdates")
 	data["edates"] = repo.app.SessionManager.PopString(r.Context(), "edates")
-	data["rooms"] = repo.app.SessionManager.Pop(r.Context(), "rooms")
+	data["reservation"] = reservation
 
 	render.TemplateRender(w, r, "make-reservation.page.tmpl", &models.TemplateData{
 		Form: form.New(nil),
@@ -121,13 +143,12 @@ func (repo *Repository) MakeReservationHandler(w http.ResponseWriter, r *http.Re
 // PostMakeReservationHandler handles form page with get and post request.
 func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
-
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	dates, ok := repo.app.SessionManager.Get(r.Context(), "chosenDates").(*models.ChosenDates)
+	reservation, ok := repo.app.SessionManager.Get(r.Context(), "reservation").(*models.Reservation)
 	if !ok {
 		repo.app.SessionManager.Put(r.Context(), "warning", "Not found chosen dates")
 	}
@@ -139,23 +160,14 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 	form.MinLength("phone", 10)
 	form.IsEmail("email")
 
-	reservation := &models.Reservation{
-		FirstName: r.Form.Get("first_name"),
-		LastName:  r.Form.Get("last_name"),
-		Email:     form.Get("email"),
-		Phone:     form.Get("phone"),
-		StartDate: dates.Start,
-		EndDate:   dates.End,
-		RoomID:    1,
-	}
-
-	hotels := r.Form["hotels"]
-	fmt.Print(hotels)
+	reservation.FirstName = r.Form.Get("first_name")
+	reservation.LastName = r.Form.Get("last_name")
+	reservation.Email = form.Get("email")
+	reservation.Phone = form.Get("phone")
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
 		data["reservation"] = reservation
-
 		render.TemplateRender(w, r, "make-reservation.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
@@ -170,8 +182,8 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 	}
 
 	roomrestriction := &models.RoomRestriction{
-		StartDate:     dates.Start,
-		EndDate:       dates.End,
+		StartDate:     reservation.StartDate,
+		EndDate:       reservation.EndDate,
 		RoomID:        reservation.RoomID,
 		ReservationID: reservation.ID,
 		RestrictionID: 1,
@@ -182,14 +194,17 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 		return
 	}
 
+	// Replacing the reservation pointer to session data.
+	repo.app.SessionManager.Remove(r.Context(), "reservation")
 	repo.app.SessionManager.Put(r.Context(), "reservation", reservation)
+
 	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 }
 
 func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
 	reservation, ok := repo.app.SessionManager.Pop(r.Context(), "reservation").(*models.Reservation)
 	if ok {
+		data := make(map[string]interface{})
 		data["reservation"] = reservation
 		render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
 			Data: data,

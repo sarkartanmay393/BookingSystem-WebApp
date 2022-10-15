@@ -26,7 +26,7 @@ func (db *DB) InsertReservation(res *models.Reservation) (int, error) {
 	return newID, nil
 }
 
-// InsertRoomRestriction inserts a new rooom restriction into database.
+// InsertRoomRestriction inserts a new room restriction into database.
 func (db *DB) InsertRoomRestriction(rr *models.RoomRestriction) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -43,8 +43,8 @@ func (db *DB) InsertRoomRestriction(rr *models.RoomRestriction) error {
 	return nil
 }
 
-// SearcAvailabilityByDatesAndRoomID return if room is availble in between selected days or not.
-func (db *DB) SearcAvailabilityByDatesAndRoomID(start_date time.Time, end_date time.Time, room_id int) (bool, error) {
+// SearchAvailabilityByDatesAndRoomID return if room is availble in between selected days or not.
+func (db *DB) SearchAvailabilityByDatesAndRoomID(start_date time.Time, end_date time.Time, room_id int) (bool, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -65,8 +65,8 @@ func (db *DB) SearcAvailabilityByDatesAndRoomID(start_date time.Time, end_date t
 	return false, nil
 }
 
-// SearcAvailabilityByDates returns a slice of available rooms if any.
-func (db *DB) SearcAvailabilityByDates(start_date, end_date time.Time) ([]models.Room, error) {
+// SearchAvailabilityByDates returns a slice of available rooms if any.
+func (db *DB) SearchAvailabilityByDates(startDate, endDate time.Time) ([]models.Room, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -76,9 +76,9 @@ func (db *DB) SearcAvailabilityByDates(start_date, end_date time.Time) ([]models
 	FROM room_restrictions 
 	WHERE $1 < end_date and $2 > start_date);`
 
-	roomsList := []models.Room{}
+	var roomsList []models.Room
 
-	rows, err := db.SQL.QueryContext(ctx, query, start_date, end_date)
+	rows, err := db.SQL.QueryContext(ctx, query, startDate, endDate)
 	if err != nil {
 		log.Println("Error while querying, Err:", err)
 		return roomsList, err
