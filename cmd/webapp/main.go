@@ -48,11 +48,10 @@ func main() {
 
 func RunMain() (*driver.DB, error) {
 
-	gob.Register(&models.Reservation{})
-	gob.Register(&models.ChosenDates{})
-	gob.Register(&models.Restriction{})
-	gob.Register([]models.Room{})
 	gob.Register(&models.User{})
+	gob.Register([]models.Room{})
+	gob.Register(&models.Reservation{})
+	gob.Register(&models.Restriction{})
 	gob.Register(&models.RoomRestriction{})
 
 	log.Println("Connecting to database...")

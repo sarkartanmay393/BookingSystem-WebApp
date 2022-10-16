@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/go-chi/chi"
 	"net/http"
 	"strconv"
@@ -38,6 +39,10 @@ func AttachRepo(r *Repository) {
 
 // HomeHandler handles main page on "/".
 func (repo *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
+
+	room, _ := repo.db.GetRoomByID(0)
+	fmt.Print(room)
+
 	render.TemplateRender(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 

@@ -94,3 +94,16 @@ func (db *DB) SearchAvailabilityByDates(startDate, endDate time.Time) ([]models.
 	}
 	return roomsList, nil
 }
+
+func (db *DB) GetRoomByID(id int) (models.Room, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `SELECT id, room_name, created_at, updated_at FROM rooms WHERE id = $1;`
+
+	var room models.Room
+	row := db.SQL.QueryRowContext(ctx, query, id)
+	row.Scan(&room.ID, &room.RoomName, &room.CreatedAt, &room.UpdatedAt)
+
+	return room, nil
+}
