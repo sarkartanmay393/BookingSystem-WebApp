@@ -29,6 +29,17 @@ func main() {
 		log.Fatalln("Failed to execute runMain() function in main.go file.")
 	}
 	defer db.SQL.Close()
+	defer close(app.MailChannel)
+	log.Println("Starting mail listener...")
+	listenAndSendMails() // it will listen and send email if there is a new email
+
+	//msg := models.MailData{
+	//	From:    "somewhere@g.com",
+	//	To:      "somehow@g.com",
+	//	Subject: "Something",
+	//	Content: "",
+	//}
+	//app.MailChannel <- msg
 
 	os.Setenv("PORT", "8080")
 	portNumber = fmt.Sprintf(":%v", os.Getenv("PORT"))
@@ -53,6 +64,10 @@ func RunMain() (*driver.DB, error) {
 	gob.Register(&models.Reservation{})
 	gob.Register(&models.Restriction{})
 	gob.Register(&models.RoomRestriction{})
+
+	ch := make(chan models.MailData)
+	// A channel of Mail Data structure.
+	app.MailChannel = ch
 
 	log.Println("Connecting to database...")
 	dsn := "host=localhost port=5432 dbname=roomreservation user=postgres password=Tanmay3597!"
