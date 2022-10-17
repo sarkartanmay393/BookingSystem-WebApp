@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"fmt"
+	"encoding/json"
 	"github.com/go-chi/chi"
 	"net/http"
 	"strconv"
@@ -39,10 +39,6 @@ func AttachRepo(r *Repository) {
 
 // HomeHandler handles main page on "/".
 func (repo *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-
-	room, _ := repo.db.GetRoomByID(0)
-	fmt.Print(room)
-
 	render.TemplateRender(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
@@ -132,7 +128,14 @@ func (repo *Repository) MakeReservationHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	room, err := repo.db.GetRoomByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
 	reservation.RoomID = id
+	reservation.Room = room
 
 	data := make(map[string]interface{})
 	data["sdates"] = repo.app.SessionManager.PopString(r.Context(), "sdates")
@@ -220,6 +223,50 @@ func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http
 	repo.app.ErrorLog.Println("Failed to retrieve reservation data from session")
 	repo.app.SessionManager.Put(r.Context(), "error", "Not found user information")
 	http.Redirect(w, r, "/reservation", http.StatusTemporaryRedirect)
+}
+
+type jsonResponse struct {
+	OK       bool   `json:"ok"`
+	Message  string `json:"message"`
+	RoomName string `json:"roomName"`
+	//StartDate time.Time `json:"start_date"`
+	//EndDate time.Time `json:"end_date"`
+}
+
+// AvailabilityHandler handles post request on "/reservation-json" and send json response.
+func (repo *Repository) AvailabilityHandler(w http.ResponseWriter, r *http.Request) {
+
+	//if !(r.Form.Has("start") && r.Form.Has("end")) {
+	//	repo.app.ErrorLog.Println("No dates choosen")
+	//	return
+	//}
+
+	layout := "02-01-2006"
+	start, _ := time.Parse(layout, r.Form.Get("start"))
+	end, _ := time.Parse(layout, r.Form.Get("end"))
+	roomId, _ := strconv.Atoi(r.Form.Get("room_id"))
+
+	available, err := repo.db.SearchAvailabilityByDatesAndRoomID(start, end, roomId)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	room, _ := repo.db.GetRoomByID(roomId)
+
+	resp := jsonResponse{
+		OK:       available,
+		Message:  "",
+		RoomName: room.RoomName,
+	}
+
+	out, err := json.MarshalIndent(resp, "", "    ")
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 // ContactHandler handles main page on "/contact".

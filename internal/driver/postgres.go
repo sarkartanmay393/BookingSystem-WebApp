@@ -43,7 +43,7 @@ func (db *DB) InsertRoomRestriction(rr *models.RoomRestriction) error {
 	return nil
 }
 
-// SearchAvailabilityByDatesAndRoomID return if room is availble in between selected days or not.
+// SearchAvailabilityByDatesAndRoomID return if room is available in between selected days or not.
 func (db *DB) SearchAvailabilityByDatesAndRoomID(start_date time.Time, end_date time.Time, room_id int) (bool, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -104,6 +104,10 @@ func (db *DB) GetRoomByID(id int) (models.Room, error) {
 	var room models.Room
 	row := db.SQL.QueryRowContext(ctx, query, id)
 	row.Scan(&room.ID, &room.RoomName, &room.CreatedAt, &room.UpdatedAt)
+
+	if err := row.Err(); err != nil {
+		return room, err
+	}
 
 	return room, nil
 }

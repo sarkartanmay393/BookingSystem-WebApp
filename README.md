@@ -12,6 +12,8 @@
 4. HTML, CSS, JS, Bootstrap etc.
 5. Server side validation using Golang.
 6. Writing Test Functions in Golang.
+7. Interacting with Database using Go.
+8. Setting up Mail server using Go.
 
 ### Packages I Used -
 1. "net/http"
