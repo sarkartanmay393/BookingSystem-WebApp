@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <!-- Welcome Dialog with Button to Reservation -->
+    <!-- Welcome, Dialog with Button to Reservation -->
     <div class="text-center welcome-component" style="color: white">
         <h1 class="welcome-text">
             Single Bedded Rooms
@@ -57,12 +57,14 @@
         <p class="welcome-paragraph" style="color: white">
             Amazing companion for your resting places, Book rooms of any quality you want with just a click.
         </p>
+
         <!-- Booking Button Implementation -->
         <div class="row" style="background-color: #212529">
             <div class="col text-center">
                 <button id="check-availability-popup-form-button" type="button" class="btn btn-success ">Check Availability</button>
             </div>
         </div>
+
     </div>
 
 {{end}}
@@ -96,14 +98,24 @@
                 callback: function (formValues) {
                     let form = document.getElementById("check-availability-popup-form");
                     let formData = new FormData(form);
-                    formData.append("csrf_token", "{{.CSRFToken}}");
 
+                    // if (!(formData.has("start") && formData.has("end"))){
+                    //     console.log(formData.keys())
+                    //     return
+                    // }
+
+                    formData.append("csrf_token", "{{.CSRFToken}}");
+                    formData.append("room_id", "1")
 
                     fetch("/reservation-json",{
                         method: "post",
                         body: formData,
                     }).then(response => response.json()).then((data) => {
-                        console.log(data)
+                        if (data.ok) {
+                            attentionButton.success({msg: "Room Available", button: "Reserve Now"});
+                        } else {
+                            attentionButton.error({msg: "Room Not Available"});
+                        }
                     });
 
                 },
@@ -113,6 +125,7 @@
                         // Put Options Here
                         format: "dd-mm-yyyy",
                         showFocus: true,
+                        minDate: "today",
                     });
 
                 },

@@ -40,6 +40,7 @@
   </nav>
 
 
+
   <!-- Make Reservation Implementation -->
   <div class="container reservation-component">
     <div class="row">
@@ -47,8 +48,18 @@
         <h2>Make your reservation below</h2>
 
         {{$res := index .Data "reservation"}}
+        {{$sdates := index .Data "sdates"}}
+        {{$edates := index .Data "edates"}}
+
+
         <form action="/make-reservation" method="post" class="" novalidate>
           <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+          <div class="col g-4 mb-2">
+            <label for="chosenDates" class="form-label">Room Name: <b> {{$res.Room.RoomName}} </b></label>
+            <label for="chosenDates" class="form-label">Arrival: <b> {{$sdates}} </b></label>
+            <label for="chosenDates" class="form-label">Departure: <b> {{$edates}} </b></label>
+          </div>
 
           <div class="col g-4 mb-2">
             <label for="first_name" class="form-label">First Name :</label>

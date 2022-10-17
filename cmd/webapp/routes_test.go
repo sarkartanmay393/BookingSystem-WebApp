@@ -13,6 +13,7 @@ func TestRouter(t *testing.T) {
 	case *chi.Mux:
 	// do nothing
 	default:
-		t.Errorf("Type is not *chi.Mux in TestRouter() line:16 : %T", v)
+		t.Errorf("Failure in testing routes function.")
+		panic(v)
 	}
 }

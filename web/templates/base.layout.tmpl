@@ -76,6 +76,7 @@
         {{block "js" .}}
 
         {{end}}
+
         <script>
 
             let attentionButton = Prompt();
@@ -161,13 +162,15 @@
                         title = "",
                         msg = "",
                         footer = "",
+                        button = "",
                     } = c;
                     Swal.fire({
                         icon: 'success',
                         title: title,
                         text: msg,
                         footer: footer,
-                        color: "white"
+                        color: "white",
+                        button: button,
                     })
                 }
 

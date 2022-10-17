@@ -27,8 +27,10 @@ func router(a *config.AppConfig) http.Handler {
 
 	mux.Get("/contact", http.HandlerFunc(handlers.Repo.ContactHandler)) // Serve /form page request.
 
+	mux.Get("/choose-room", handlers.Repo.ChooseRoomHandler)
+
 	// Serves get and post request on 'make-reservation' path.
-	mux.Get("/make-reservation", http.HandlerFunc(handlers.Repo.MakeReservationHandler))
+	mux.Get("/make-reservation/{id}", http.HandlerFunc(handlers.Repo.MakeReservationHandler))
 	mux.Post("/make-reservation", http.HandlerFunc(handlers.Repo.PostMakeReservationHandler))
 	mux.Get("/reservation-summary", http.HandlerFunc(handlers.Repo.ReservationSummaryHandler))
 

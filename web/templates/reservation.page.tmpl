@@ -79,11 +79,14 @@
 
 {{define "js"}}
   <script>
+
     // Script for date range picker
     const elem = document.getElementById('reservation-dates');
     const rangePicker = new DateRangePicker(elem, {
       // Put Options Here
-      format: "dd-mm-yyyy"
+      format: "dd-mm-yyyy",
+      minDate: "today" //  for not letting anyone choose a date before today.
     });
+
   </script>
 {{end}}
