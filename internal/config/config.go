@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/alexedwards/scs/v2"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"log"
 	"text/template"
 )
@@ -13,4 +14,5 @@ type AppConfig struct {
 	ErrorLog       *log.Logger
 	SessionManager *scs.SessionManager
 	InProduction   bool
+	MailChannel    chan models.MailData
 }

@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 // User hold information of a particular user.
 type User struct {
@@ -43,4 +45,13 @@ type Restriction struct {
 	RestrictionName string
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
+}
+
+// MailData holds a email with necessary information.
+type MailData struct {
+	From     string
+	To       string
+	Subject  string
+	Content  string
+	Template string
 }

@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/go-chi/chi"
 	"net/http"
+	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
@@ -212,6 +215,29 @@ func (repo *Repository) PostMakeReservationHandler(w http.ResponseWriter, r *htt
 func (repo *Repository) ReservationSummaryHandler(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := repo.app.SessionManager.Pop(r.Context(), "reservation").(*models.Reservation)
 	if ok {
+
+		// Sending a formatted email to user.
+		msg := models.MailData{
+			From:     "roomreservation@gmail.com",
+			To:       reservation.Email,
+			Subject:  "Reservation Confirmation",
+			Content:  "",
+			Template: "order.html",
+		}
+
+		templateDataRead, err := os.ReadFile(fmt.Sprintf("./web/email-template/%s", msg.Template))
+		if err != nil {
+			return
+		}
+		msg.Content = string(templateDataRead)
+		msg.Content = strings.Replace(msg.Content, "[%email%]", reservation.Email, 1)
+		msg.Content = strings.Replace(msg.Content, "[%reservation_id%]", string(reservation.ID), 1)
+		msg.Content = strings.Replace(msg.Content, "[%arrival%]", reservation.StartDate.Format("02-01--2006"), 1)
+		msg.Content = strings.Replace(msg.Content, "[%departure%]", reservation.EndDate.Format("02-01--2006"), 1)
+
+		repo.app.MailChannel <- msg
+		// Email now sent!
+
 		data := make(map[string]interface{})
 		data["reservation"] = reservation
 		render.TemplateRender(w, r, "reservation-summary.page.tmpl", &models.TemplateData{

@@ -14,6 +14,7 @@
 6. Writing Test Functions in Golang.
 7. Interacting with Database using Go.
 8. Setting up Mail server using Go.
+9. Sending mail as per user's requirement.
 
 ### Packages I Used -
 1. "net/http"
@@ -23,11 +24,30 @@
 5. "[github.com/go-chi/chi](https://github.com/go-chi/chi)"
 6. "[github.com/justinas/nosurf](https://github.com/justinas/nosurf)"
 7. "[github.com/alexedwards/scs/v2](https://github.com/alexedwards/scs/v2)"
-8. "[notie](https://github.com/jaredreich/notie)" in HTML
-9. "[datepicker](https://github.com/mymth/vanillajs-datepicker)" in HTML
+8. "[notie](https://github.com/jaredreich/notie)" in JS
+9. "[datepicker](https://github.com/mymth/vanillajs-datepicker)" in JS
 10. "[github.com/asaskevich/govalidator](https://github.com/asaskevich/govalidator)"
+11. "[github.com/xhit/go-simple-mail/v2](https://github.com/xhit/go-simple-mail/v2)"
+
 
 ### Screenshots
+<details>
+   <summary> <strong>Show</strong> </summary>
 
-|  ![](static/screenshots/highend-room-page.png "Highend Room Page")   | ![](static/screenshots/reservation-form-page.png "Reservaion Form Page") | ![](static/screenshots/reservation-summary-page.png "Reservation Summary Page") |
-|-----|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+<div style="text-align: center;"> <strong><i>Highland Room Outlook</i></strong></div>
+
+![Hinghland Rooms](static/screenshots/highend-room-page.png "Highend Room Page")
+
+<div style="text-align: center;"> <strong><i>Reservation Form Page</i></strong></div>
+
+![](static/screenshots/reservation-form-page.png "Reservation Form Page")
+
+<div style="text-align: center;"> <strong><i>Reservation Summary Page</i></strong></div>
+
+![](static/screenshots/reservation-summary-page.png "Reservation Summary Page")
+
+<div style="text-align: center;"> <strong><i>Reservation Email Outlook</i></strong></div>
+
+![](web/email-template/email-outlook.png "Reservation Email Outlook")
+
+</details>
