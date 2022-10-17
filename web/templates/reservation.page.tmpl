@@ -31,6 +31,17 @@
           <li class="nav-item">
             <a class="nav-link" href="http://localhost:8080/contact">Contact</a>
           </li>
+
+          {{if .IsLogin}}
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8080/logout" methods="post">Logout</a>
+            </li>
+          {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8080/login">Login</a>
+            </li>
+          {{end}}
+
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Enter Room Name" aria-label="Search">
@@ -58,13 +69,14 @@
               </div>
             </div>
             <div class="col">
+
               <div class="mb-3">
                 <!-- <label for="end-date" class="form-label">End Date</label> -->
                 <input autocomplete="off" type="text" class="form-control" id="end-date" name="end-date" aria-describedby="end-date-help" placeholder="Departure Date" required>
                 <div id="end-date-help" class="form-text">Enter your end date in form of DD-MM-YYYY</div>
                 <div class="invalid-feedback">Enter Valid Departure Date</div>
-
               </div>
+
             </div>
           </div>
           <button type="submit" class="btn btn-primary mt-1">Check Availability</button>

@@ -15,4 +15,5 @@ type TemplateData struct {
 	SuccessMessage string
 	ErrorMessage   string
 	WarningMessage string
+	IsLogin        bool
 }

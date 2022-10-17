@@ -1,6 +1,7 @@
 {{template "base" .}}
 
 {{define "content"}}
+
     <!-- Navigation bar implementation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -11,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="http://localhost:8080/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://localhost:8080/reservation">Reservations</a>
@@ -30,17 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="http://localhost:8080/contact">Contact</a>
                     </li>
-
-                    {{if .IsLogin}}
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/logout" methods="post">Logout</a>
-                        </li>
-                    {{else}}
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/login">Login</a>
-                        </li>
-                    {{end}}
-
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Enter Room Name" aria-label="Search">
@@ -50,19 +40,36 @@
         </div>
     </nav>
 
+    <!-- Login, Dialog with Button to Reservation -->
+    <div class="text-center welcome-component">
+        <h1 class="welcome-text" style="color: white">
+            Login to YatraSahayak
+        </h1>
+        <p class="welcome-paragraph" style="color: white">
+            <a href="/signup"> Don't have account ? </a>
+        </p>
 
-    <!-- Available Rooms Grid -->
-    {{$rooms := index .Data "rooms"}}
-    <div class="container px-4 py-3">
-        {{range $rooms}}
+        <div class="row">
+            <div class="col g-2">
 
-            <ul>
-                <li><a href="/make-reservation/{{.ID}}">{{.RoomName}}</a></li>
-            </ul>
+                <form action="/login" method="post" class="needs-validation" novalidate>
 
-        {{end}}
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <div class="input-group flex-nowrap mb-3">
+                        <span class="input-group-text" id="addon-wrapping">@</span>
+                        <input name="email" id="email" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="addon-wrapping">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input id="password" name="password" type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="button-addon2">
+                        <button type="submit" class="btn btn-success" id="login-button" name="login-button">Login</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
     </div>
-
 
 
 {{end}}

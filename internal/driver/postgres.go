@@ -8,6 +8,47 @@ import (
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 )
 
+// UserLoginVia checks if user is present in database or not and return accordingly false or true.
+func (db *DB) UserLoginVia(user *models.User) (bool, int) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	userID := -1
+
+	query := `SELECT id FROM users WHERE email = $1 AND password = $2;`
+	row := db.SQL.QueryRowContext(ctx, query, user.Email, user.Password)
+
+	err := row.Scan(&userID)
+
+	if userID >= 1 {
+		return true, userID
+	}
+
+	if err != nil {
+		return false, userID
+	}
+
+	return true, userID
+}
+
+// InsertNewUser inserts a new reservation into database.
+func (db *DB) InsertNewUser(user *models.User) (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `INSERT INTO 
+		users (first_name, last_name, email, password, access, created_at, updated_at) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7) returning id`
+
+	var newID int
+	err := db.SQL.QueryRowContext(ctx, query, user.FirstName, user.LastName, user.Email, user.Password, user.AccessLevel, time.Now(), time.Now()).Scan(&newID)
+	if err != nil {
+		return 0, err
+	}
+
+	return newID, nil
+}
+
 // InsertReservation inserts a new reservation into database.
 func (db *DB) InsertReservation(res *models.Reservation) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

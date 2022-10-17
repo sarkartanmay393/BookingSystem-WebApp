@@ -29,6 +29,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	td.ErrorMessage = appConf.SessionManager.PopString(r.Context(), "error")
 	td.WarningMessage = appConf.SessionManager.PopString(r.Context(), "warning")
 	td.CSRFToken = nosurf.Token(r)
+	td.IsLogin = appConf.IsLogin
 	return td
 }
 

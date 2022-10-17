@@ -15,6 +15,7 @@ func router(a *config.AppConfig) http.Handler {
 	// mux.Use(WriteToConsole)                 // Write new page load as a middleware.
 	mux.Use(CSRFCheck)                    // Checks for Cross-site request forgery attacks.
 	mux.Use(a.SessionManager.LoadAndSave) // Loads and saves session data.
+	//mux.Use(IsAuthenticated)
 
 	mux.Get("/", http.HandlerFunc(handlers.Repo.HomeHandler))               // Serve root page request.
 	mux.Get("/singlebed", http.HandlerFunc(handlers.Repo.SinglebedHandler)) // Serve /form page request.
@@ -33,6 +34,12 @@ func router(a *config.AppConfig) http.Handler {
 	mux.Get("/make-reservation/{id}", http.HandlerFunc(handlers.Repo.MakeReservationHandler))
 	mux.Post("/make-reservation", http.HandlerFunc(handlers.Repo.PostMakeReservationHandler))
 	mux.Get("/reservation-summary", http.HandlerFunc(handlers.Repo.ReservationSummaryHandler))
+
+	mux.Get("/login", http.HandlerFunc(handlers.Repo.LoginHandler))
+	mux.Post("/login", http.HandlerFunc(handlers.Repo.PostLoginHandler))
+	mux.Get("/signup", http.HandlerFunc(handlers.Repo.SignupHandler))
+	mux.Post("/signup", http.HandlerFunc(handlers.Repo.PostSignupHandler))
+	mux.Get("/logout", http.HandlerFunc(handlers.Repo.LogoutHandler))
 
 	fileServer := http.FileServer(http.Dir("./static/"))             // fileServer handles file system contents.
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer)) // Handles all files.
