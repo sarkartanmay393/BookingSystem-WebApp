@@ -15,4 +15,5 @@ type AppConfig struct {
 	SessionManager *scs.SessionManager
 	InProduction   bool
 	MailChannel    chan models.MailData
+	IsLogin        bool
 }

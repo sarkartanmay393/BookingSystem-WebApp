@@ -295,6 +295,86 @@ func (repo *Repository) AvailabilityHandler(w http.ResponseWriter, r *http.Reque
 	w.Write(out)
 }
 
+// LoginHandler handles main page on "/login".
+func (repo *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
+	render.TemplateRender(w, r, "login.page.tmpl", &models.TemplateData{})
+}
+
+// PostLoginHandler handles main page on "/login".
+func (repo *Repository) PostLoginHandler(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	email := r.Form.Get("email")
+	pass := r.Form.Get("password")
+
+	user := &models.User{
+		Email:    email,
+		Password: pass,
+	}
+
+	isLogin, userid := repo.db.UserLoginVia(user)
+
+	if isLogin {
+		repo.app.IsLogin = isLogin
+		repo.app.SessionManager.Put(r.Context(), "user_id", userid)
+		repo.app.SessionManager.Put(r.Context(), "success", "Login successful!")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	repo.app.SessionManager.Put(r.Context(), "error", "Login failed!")
+	http.Redirect(w, r, "login", http.StatusSeeOther)
+
+}
+
+// SignupHandler handles main page on "/login".
+func (repo *Repository) SignupHandler(w http.ResponseWriter, r *http.Request) {
+	render.TemplateRender(w, r, "signup.page.tmpl", &models.TemplateData{})
+}
+
+// PostSignupHandler handles main page on "/login".
+func (repo *Repository) PostSignupHandler(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	first := r.Form.Get("first_name")
+	last := r.Form.Get("last_name")
+	email := r.Form.Get("email")
+	pass := r.Form.Get("password")
+
+	user := &models.User{
+		FirstName:   first,
+		LastName:    last,
+		Email:       email,
+		Password:    pass,
+		AccessLevel: 1,
+	}
+
+	_, err = repo.db.InsertNewUser(user)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
+}
+
+// LogoutHandler handles main page on "/logout".
+func (repo *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	repo.app.IsLogin = false
+	repo.app.InfoLog.Println("User logged out!")
+	repo.app.SessionManager.Put(r.Context(), "warning", "User Logged Out!")
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
+}
+
 // ContactHandler handles main page on "/contact".
 func (repo *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	render.TemplateRender(w, r, "contact.page.tmpl", &models.TemplateData{})

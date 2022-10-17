@@ -30,6 +30,17 @@
           <li class="nav-item">
             <a class="nav-link" href="http://localhost:8080/contact">Contact</a>
           </li>
+
+          {{if .IsLogin}}
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8080/logout" methods="post">Logout</a>
+            </li>
+          {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:8080/login">Login</a>
+            </li>
+          {{end}}
+
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Enter Room Name" aria-label="Search">
