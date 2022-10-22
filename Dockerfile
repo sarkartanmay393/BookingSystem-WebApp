@@ -1,5 +1,5 @@
 # Using the minimalist OS image for Golang enviroment.
-FROM golang:1.16-alpine
+FROM golang:1.19-alpine
 
 # Setting our systems working directory.
 WORKDIR /app

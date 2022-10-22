@@ -40,6 +40,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v3
@@ -65,9 +68,11 @@ jobs:
           file: ./Dockerfile
 
   deploy:
-    permissions:
-      contents: none
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     needs: build
     environment:
       name: 'Development'

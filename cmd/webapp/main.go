@@ -75,8 +75,8 @@ func RunMain() (*driver.DB, error) {
 	log.Println("Connecting to database...")
 	host := "roomreservationwebapp-server"
 	dbname := "postgres"
-	dbuser := os.Getenv("DBUSER") //"splmsouiue"
-	dbpass := os.Getenv("DBPASS") //"J1HN7YDU8FSK088F$"
+	dbuser := "splmsouiue"        //os.Getenv("DBUSER") //
+	dbpass := "J1HN7YDU8FSK088F$" //os.Getenv("DBPASS") //
 	dsn := fmt.Sprintf("host=%s port=5432 dbname=%s user=%S password=%s", host, dbname, dbuser, dbpass)
 	db, err := driver.ConnectSQL(dsn)
 	if err != nil {
