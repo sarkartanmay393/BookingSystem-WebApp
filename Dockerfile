@@ -12,7 +12,7 @@ RUN go mod download
 RUN go build cmd/webapp/*.go
 
 # Exposing our connection at Port 8080
-EXPOSE 8080
+#ARG PORT
 
 # A command for running the executable file.
 CMD ./main

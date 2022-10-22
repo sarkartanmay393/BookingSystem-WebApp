@@ -41,8 +41,11 @@ func main() {
 	//}
 	//app.MailChannel <- msg
 
-	os.Setenv("PORT", "8080")
-	portNumber = fmt.Sprintf(":%v", os.Getenv("PORT"))
+	//os.Setenv("PORT", "8080")
+	if port, found := os.LookupEnv("PORT"); found {
+		log.Println("Found Port: ", port)
+		portNumber = fmt.Sprintf(":%v", port)
+	}
 
 	log.Println("Server started on port 8080 💫")
 	// Serving and Handling web with help of pat pkg.
@@ -70,7 +73,7 @@ func RunMain() (*driver.DB, error) {
 	app.MailChannel = ch
 
 	log.Println("Connecting to database...")
-	dsn := "host=localhost port=5432 dbname=roomreservation user=postgres password=Tanmay3597!"
+	dsn := "host=ec2-3-219-19-205.compute-1.amazonaws.com port=5432 dbname=dchgnju93lebme user=fazgywmwtksxkk password=4440eada051d54679bc3fe0805cbc2c4b86bb5b1cd8d44a1d944d97f93b363c9"
 	db, err := driver.ConnectSQL(dsn)
 	if err != nil {
 		log.Fatalln("unable to connect database: ", err)
