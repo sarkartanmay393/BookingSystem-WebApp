@@ -73,7 +73,11 @@ func RunMain() (*driver.DB, error) {
 	app.MailChannel = ch
 
 	log.Println("Connecting to database...")
-	dsn := "host=ec2-3-219-19-205.compute-1.amazonaws.com port=5432 dbname=dchgnju93lebme user=fazgywmwtksxkk password=4440eada051d54679bc3fe0805cbc2c4b86bb5b1cd8d44a1d944d97f93b363c9"
+	host := "roomreservationwebapp-server"
+	dbname := "postgres"
+	dbuser := os.Getenv("DBUSER") //"splmsouiue"
+	dbpass := os.Getenv("DBPASS") //"J1HN7YDU8FSK088F$"
+	dsn := fmt.Sprintf("host=%s port=5432 dbname=%s user=%S password=%s", host, dbname, dbuser, dbpass)
 	db, err := driver.ConnectSQL(dsn)
 	if err != nil {
 		log.Fatalln("unable to connect database: ", err)
