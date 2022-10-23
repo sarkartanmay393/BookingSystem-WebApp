@@ -47,7 +47,7 @@ func main() {
 		portNumber = fmt.Sprintf(":%v", port)
 	}
 
-	log.Println("Server started on port 8080 💫")
+	log.Printf("Server started on port %s 💫\n", portNumber)
 	// Serving and Handling web with help of pat pkg.
 	srv := &http.Server{
 		Addr:    portNumber,
@@ -73,14 +73,18 @@ func RunMain() (*driver.DB, error) {
 	app.MailChannel = ch
 
 	log.Println("Connecting to database...")
-	host := "roomreservationwebapp-server"
-	dbname := "postgres"
-	dbuser := "splmsouiue"        //os.Getenv("DBUSER") //
-	dbpass := "J1HN7YDU8FSK088F$" //os.Getenv("DBPASS") //
-	dsn := fmt.Sprintf("host=%s port=5432 dbname=%s user=%S password=%s", host, dbname, dbuser, dbpass)
+
+	log.Println("Parsing Environment Variables...")
+
+	HOST := os.Getenv("HOST")
+	DB_NAME := os.Getenv("DB_NAME")
+	DB_USER := os.Getenv("DB_USER")
+	DB_PASS := os.Getenv("DB_PASS")
+
+	dsn := fmt.Sprintf("host=%s port=5432 dbname=%s user=%S password=%s", HOST, DB_NAME, DB_USER, DB_PASS)
 	db, err := driver.ConnectSQL(dsn)
 	if err != nil {
-		log.Fatalln("unable to connect database: ", err)
+		//log.Fatalln("unable to connect database: ", err)
 	}
 	log.Println("Connected to database!")
 
