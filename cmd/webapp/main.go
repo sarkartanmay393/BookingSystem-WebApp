@@ -18,7 +18,7 @@ import (
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/render"
 )
 
-var portNumber = ":8080"
+var portNumber = ":80"
 
 var app config.AppConfig
 var session *scs.SessionManager

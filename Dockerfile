@@ -1,13 +1,14 @@
 # Using the OS image for Golang enviroment.
 FROM golang
 
-# RUN mkdir /usr/local/app
+ENV PORT=80
 
 # Setting our systems working directory.
 WORKDIR /app
 
 # Copying all files from present directory to system /app directory as we already set our working directory.
 COPY . .
+
 
 # Running commands to download module packages and building a exectuable of our project.
 RUN go mod download
@@ -29,8 +30,6 @@ RUN go install github.com/gobuffalo/pop/v6/soda@latest
 # RUN createdb roomreservation
 
 # RUN soda migrate up
-
-EXPOSE 8080
 
 CMD "./main"
 
