@@ -30,6 +30,7 @@ func main() {
 	}
 	defer db.SQL.Close()
 	defer close(app.MailChannel)
+
 	log.Println("Starting mail listener...")
 	listenAndSendMails() // it will listen and send email if there is a new email
 
@@ -74,17 +75,18 @@ func RunMain() (*driver.DB, error) {
 
 	log.Println("Connecting to database...")
 
-	log.Println("Parsing Environment Variables...")
+	// log.Println("Parsing Environment Variables...")
 
-	HOST := os.Getenv("HOST")
-	DB_NAME := os.Getenv("DB_NAME")
-	DB_USER := os.Getenv("DB_USER")
-	DB_PASS := os.Getenv("DB_PASS")
+	// HOST := os.Getenv("HOST")
+	// DB_NAME := os.Getenv("DB_NAME")
+	// DB_USER := os.Getenv("DB_USER")
+	// DB_PASS := os.Getenv("DB_PASS")
 
-	dsn := fmt.Sprintf("host=%s port=5432 dbname=%s user=%S password=%s", HOST, DB_NAME, DB_USER, DB_PASS)
+	dsn := fmt.Sprintf("host=database port=5432 dbname=postgres user=postgres password=%s", "postgres")
 	db, err := driver.ConnectSQL(dsn)
+
 	if err != nil {
-		//log.Fatalln("unable to connect database: ", err)
+		log.Fatalln("unable to connect database: ", err)
 	}
 	log.Println("Connected to database!")
 
@@ -114,6 +116,9 @@ func RunMain() (*driver.DB, error) {
 	session.Cookie.Secure = app.InProduction
 
 	app.SessionManager = session // Transfers this session object to app config.
+
+	// jugar code by me
+	app.RoomLoaded = false
 
 	return db, nil
 }

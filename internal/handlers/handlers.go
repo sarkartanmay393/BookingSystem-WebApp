@@ -3,12 +3,13 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/go-chi/chi"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/go-chi/chi"
 
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/driver"
@@ -57,6 +58,35 @@ func (repo *Repository) SinglebedHandler(w http.ResponseWriter, r *http.Request)
 
 // ReservationHandler handles main page on "/reservation".
 func (repo *Repository) ReservationHandler(w http.ResponseWriter, r *http.Request) {
+	if !repo.app.RoomLoaded {
+		// Personally I am adding some sample rooms in rooms table in db.
+		query := `INSERT INTO "public"."rooms" ("id", "room_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4);`
+		rooms := []models.Room{
+			{ID: 1, RoomName: "Meghnath Palace", CreatedAt: time.Now(), UpdatedAt: time.Now()},
+			{ID: 2, RoomName: "Bengal Raj", CreatedAt: time.Now(), UpdatedAt: time.Now()},
+		}
+
+		var ERR bool
+
+		for _, room := range rooms {
+			_, err := repo.db.SQL.Exec(query, room.ID, room.RoomName, room.CreatedAt, room.UpdatedAt)
+			if err != nil {
+				ERR = true
+				repo.app.ErrorLog.Println("Error inserting sample rooms in database: ", err)
+			}
+		}
+
+		query = `INSERT INTO "public"."restrictions" ("id", "restriction_name", "created_at", "updated_at") VALUES ($1, $2, $3, $4);`
+		_, err := repo.db.SQL.Exec(query, 1, "Owner Blocked", time.Now(), time.Now())
+		if err != nil {
+			ERR = true
+			repo.app.ErrorLog.Println("Error inserting owner block restriction in database: ", err)
+		}
+		if !ERR {
+			repo.app.RoomLoaded = true
+		}
+	}
+
 	render.TemplateRender(w, r, "reservation.page.tmpl", &models.TemplateData{})
 }
 
@@ -362,6 +392,8 @@ func (repo *Repository) PostSignupHandler(w http.ResponseWriter, r *http.Request
 		helpers.ServerError(w, err)
 		return
 	}
+
+	repo.app.SessionManager.Put(r.Context(), "success", "Signup Successful!")
 
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

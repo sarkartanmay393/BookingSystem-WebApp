@@ -1,16 +1,18 @@
 package main
 
 import (
+	"time"
+
 	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	mail "github.com/xhit/go-simple-mail/v2"
-	"time"
 )
 
 func listenAndSendMails() {
 	go func() {
 		for {
-			email := <-app.MailChannel
-			sendEmail(email)
+			_ = <-app.MailChannel
+			app.InfoLog.Println("email not sending in dev mode.")
+			// sendEmail(email)
 		}
 	}()
 }

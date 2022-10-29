@@ -2,9 +2,10 @@ package helpers
 
 import (
 	"fmt"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 	"net/http"
 	"runtime/debug"
+
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/config"
 )
 
 var app *config.AppConfig
@@ -21,7 +22,9 @@ func ClientError(w http.ResponseWriter, statusCode int) {
 func ServerError(w http.ResponseWriter, err error) {
 	trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
 	app.ErrorLog.Println(trace)
-	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+	http.Error(w, fmt.Sprintf("%s\tERR: %s", http.StatusText(http.StatusInternalServerError), err), http.StatusInternalServerError)
 }
 
-
+func StatusText(i int) {
+	panic("unimplemented")
+}

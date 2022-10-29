@@ -2,3 +2,4 @@
 .DS_Store
 reservation.webapp
 database.yml
+db_pass.txt

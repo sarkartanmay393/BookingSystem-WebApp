@@ -1,10 +1,11 @@
 package config
 
 import (
-	"github.com/alexedwards/scs/v2"
-	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 	"log"
 	"text/template"
+
+	"github.com/alexedwards/scs/v2"
+	"github.com/sarkartanmay393/RoomReservation-WebApp/internal/models"
 )
 
 type AppConfig struct {
@@ -16,4 +17,5 @@ type AppConfig struct {
 	InProduction   bool
 	MailChannel    chan models.MailData
 	IsLogin        bool
+	RoomLoaded     bool
 }
