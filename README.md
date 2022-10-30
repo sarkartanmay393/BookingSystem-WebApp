@@ -4,6 +4,9 @@
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+<a name="readme-top"></a>
+
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -63,13 +66,14 @@
 ## About The Project
 
 ### Built With
+
 * [![Go][Go.dev]][Go-url]
 * [![Docker][Docker.com]][Docker-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
 
-
 ### Things I Learned
+
 1. Everything of Basic Web App.
 2. Using [**nosurf**](https://github.com/justinas/nosurf) Middleware.
 3. Using [**scs**](https://github.com/alexedwards/scs) Session Management.
@@ -80,8 +84,8 @@
 8. Setting up Mail server using Go.
 9. Sending mail as per user's requirement.
 
-
 ### Packages I Used
+
 1. "net/http"
 2. "path/filepath"
 3. "text/template"
@@ -93,7 +97,6 @@
 9. "[datepicker](https://github.com/mymth/vanillajs-datepicker)"  (JavaScript)
 10. "[github.com/asaskevich/govalidator](https://github.com/asaskevich/govalidator)"
 11. "[github.com/xhit/go-simple-mail/v2](https://github.com/xhit/go-simple-mail/v2)"
-
 
 <details>
    <summary><strong> Show Screenshots</strong> </summary>
@@ -118,7 +121,6 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -126,21 +128,26 @@ Running a development environment for this project will be the easiest thing in 
 
 ### Prerequisites
 
-* [**Go**](https://go.dev/dl/) 
+* [**Go**](https://go.dev/dl/)
 * [**Docker**](https://www.docker.com)
 * [**PostgreSQL**](https://www.postgresql.org/download/) (optional)
 
 ### Steps to run
 
-- Clone the repository
+* Clone the repository
+
   ```shell
   git clone https://github.com/sarkartanmay393/RoomReservation-WebApp.git
   ```
+
 - Run the following command to start everything using Docker
+
   ```shell
   docker compose up
   ```
+
 - Command you need to pass inside running `web` container
+
   ```shell
   soda migrate up
   ```
@@ -185,7 +192,6 @@ Project Link: [https://github.com/sarkartanmay393/RoomReservation-WebApp](https:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 **Thanks for visiting my project. If you like it, please give it a star. It will help me a lot. Thanks again!**
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -200,7 +206,7 @@ Project Link: [https://github.com/sarkartanmay393/RoomReservation-WebApp](https:
 [issues-url]: https://github.com/sarkartanmay393/RoomReservation-WebApp/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/tanmaysrkr
-[Go.dev]: https://img.shields.io/badge/Go-027d9c?style=for-the-badge&logo=go&logoColor=white    
+[Go.dev]: https://img.shields.io/badge/Go-027d9c?style=for-the-badge&logo=go&logoColor=white
 [Go-url]: https://go.dev/
 [Docker.com]: https://img.shields.io/badge/Docker-2496ed?style=for-the-badge&logo=docker&logoColor=white
 [Docker-url]: https://www.docker.com/
@@ -208,5 +214,3 @@ Project Link: [https://github.com/sarkartanmay393/RoomReservation-WebApp](https:
 [PostgreSQL-url]: https://www.postgresql.org/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
-
-
