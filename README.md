@@ -25,7 +25,7 @@ Database Interaction.
 RoomReservation-WebApp"><strong>Explore Code »</strong></a>
    <br />
    <br />
-   <a href="http://yatra.eastasia.cloudapp.azure.com/" target="blank" >View Demo</a>
+   <a href="http://yatra.eastasia.cloudapp.azure.com/" target="_blank" rel="noopener noreferrer" >View Demo</a>
    ·
    <a href="https://github.com/sarkartanmay393/RoomReservation-WebApp/
 issues">Report Bug</a>
