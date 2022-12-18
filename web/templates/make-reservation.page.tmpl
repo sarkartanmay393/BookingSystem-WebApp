@@ -4,40 +4,40 @@
   <!-- Navigation bar implementation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="http://yatra.eastasia.cloudapp.azure.com/">YatraSahayak</a>
+      <a class="navbar-brand" href="http://139.162.246.223/">YatraSahayak</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="http://yatra.eastasia.cloudapp.azure.com/">Home</a>
+            <a class="nav-link" aria-current="page" href="http://139.162.246.223/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://yatra.eastasia.cloudapp.azure.com/reservation">Reservations</a>
+            <a class="nav-link" href="http://139.162.246.223/reservation">Reservations</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Rooms
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="http://yatra.eastasia.cloudapp.azure.com/singlebed">Single Room</a></li>
-              <li><a class="dropdown-item" href="http://yatra.eastasia.cloudapp.azure.com/coed">Co-ed Room</a></li>
+              <li><a class="dropdown-item" href="http://139.162.246.223/singlebed">Single Room</a></li>
+              <li><a class="dropdown-item" href="http://139.162.246.223/coed">Co-ed Room</a></li>
               <!--              <li><hr class="dropdown-divider"></li>-->
-              <li><a class="dropdown-item" href="http://yatra.eastasia.cloudapp.azure.com/highland">Highland Room</a></li>
+              <li><a class="dropdown-item" href="http://139.162.246.223/highland">Highland Room</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://yatra.eastasia.cloudapp.azure.com/contact">Contact</a>
+            <a class="nav-link" href="http://139.162.246.223/contact">Contact</a>
           </li>
 
           {{if .IsLogin}}
             <li class="nav-item">
-              <a class="nav-link" href="http://yatra.eastasia.cloudapp.azure.com/logout" methods="post">Logout</a>
+              <a class="nav-link" href="http://139.162.246.223/logout" methods="post">Logout</a>
             </li>
           {{else}}
             <li class="nav-item">
-              <a class="nav-link" href="http://yatra.eastasia.cloudapp.azure.com/login">Login</a>
+              <a class="nav-link" href="http://139.162.246.223/login">Login</a>
             </li>
           {{end}}
 
