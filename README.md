@@ -25,7 +25,7 @@ Database Interaction.
 RoomReservation-WebApp"><strong>Explore Code »</strong></a>
    <br />
    <br />
-   <a href="http://139.162.246.223/" target="_blank" rel="noopener noreferrer" >View Demo</a>
+   <a href="http://192.46.213.243/" target="_blank" rel="noopener noreferrer" >View Demo</a>
    ·
    <a href="https://github.com/sarkartanmay393/RoomReservation-WebApp/
 issues">Report Bug</a>
