@@ -25,7 +25,7 @@ Database Interaction.
 RoomReservation-WebApp"><strong>Explore Code »</strong></a>
    <br />
    <br />
-   <a href="http://192.46.213.243/" target="_blank" rel="noopener noreferrer" >View Demo</a>
+   <a href="http://172.105.56.240/" target="_blank" rel="noopener noreferrer" >View Demo</a>
    ·
    <a href="https://github.com/sarkartanmay393/RoomReservation-WebApp/
 issues">Report Bug</a>
@@ -69,14 +69,15 @@ issues">Request Feature</a>
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 ### Built With
 
-* [![Go][Go.dev]][Go-url]
-* [![Docker][Docker.com]][Docker-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
+- [![Go][Go.dev]][Go-url]
+- [![Docker][Docker.com]][Docker-url]
+- [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+- [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
 
 ### Things I Learned
 
@@ -101,7 +102,7 @@ issues">Request Feature</a>
 6. "[github.com/justinas/nosurf](https://github.com/justinas/nosurf)"
 7. "[github.com/alexedwards/scs/v2](https://github.com/alexedwards/scs/v2)"
 8. "[notie](https://github.com/jaredreich/notie)" (JavaScript)
-9. "[datepicker](https://github.com/mymth/vanillajs-datepicker)"  (JavaScript)
+9. "[datepicker](https://github.com/mymth/vanillajs-datepicker)" (JavaScript)
 10. "[github.com/asaskevich/govalidator](https://github.com/asaskevich/govalidator)"
 11. "[github.com/xhit/go-simple-mail/v2](https://github.com/xhit/go-simple-mail/v2)"
 12. “[soda cli tool](https://gobuffalo.io/documentation/database/soda/)”
@@ -132,36 +133,37 @@ issues">Request Feature</a>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 Running a development environment for this project will be the easiest thing in you day.
 
 ### Prerequisites
 
-* [**Go**](https://go.dev/dl/)
-* [**Docker**](https://www.docker.com)
+- [**Go**](https://go.dev/dl/)
+- [**Docker**](https://www.docker.com)
 
 ### Steps to run
 
-* Clone the repository
+- Clone the repository
 
   ```zsh
   git clone https://github.com/sarkartanmay393/RoomReservation-WebApp.git
   ```
 
-* Run the following command to start everything using Docker
+- Run the following command to start everything using Docker
 
   ```zsh
   docker compose up
   ```
 
-* Execute `web` container on terminal
+- Execute `web` container on terminal
 
   ```zsh
   docker exec -it web bash
   ```
 
-* Command you need to pass inside running the container
+- Command you need to pass inside running the container
 
   ```bash
   soda migrate up
@@ -174,18 +176,20 @@ Running a development environment for this project will be the easiest thing in 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
-* [x] Web Application
-* [x] Styling w/ Bootstrap
-* [x] Database
-* [x] Email Service
-* [ ] New Responsive UI
-* [ ] Real Project Transformation
+- [x] Web Application
+- [x] Styling w/ Bootstrap
+- [x] Database
+- [x] Email Service
+- [ ] New Responsive UI
+- [ ] Real Project Transformation
 
 See the [open issues](https://github.com/sarkartanmay393/RoomReservation-WebApp/issues) for a full list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -201,6 +205,7 @@ Don't forget to give the project a star! Thanks again!
 6. Wait for review
 
 <!-- CONTACT -->
+
 ## Contact
 
 Your Name - Tanmay Sarkar [@sarkartanmay393](https://twitter.com/sarkartanmay393) - [hello@tanmaysarkar.tech](mailto:hello@tanmaysarkar.tech)
@@ -213,6 +218,7 @@ Project Link: [https://github.com/sarkartanmay393/RoomReservation-WebApp](https:
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/sarkartanmay393/RoomReservation-WebApp.svg?style=for-the-badge
 [contributors-url]: https://github.com/sarkartanmay393/RoomReservation-WebApp/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/sarkartanmay393/RoomReservation-WebApp.svg?style=for-the-badge
